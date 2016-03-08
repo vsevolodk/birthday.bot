@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema
+        xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+        targetNamespace="urn:birthdaybot:1.0"
+        xmlns="urn:birthdaybot:1.0"
+        elementFormDefault="qualified"
+        attributeFormDefault="unqualified"
+        version="1.0">
+  <xsd:element name="birthdayBot">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="login"/>
+        <xsd:element ref="interval"/>
+        <xsd:element ref="sendRequestMessage"/>
+        <xsd:element ref="contacts"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+  <xsd:element name="bDay" type="xsd:date"/>
+  <xsd:element name="skype" type="xsd:string"/>
+  <xsd:element name="topicName" type="xsd:string"/>
+  <xsd:element name="contact">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="skype"/>
+        <xsd:element ref="bDay"/>
+        <xsd:element ref="topicName"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="login" type="xsd:string"/>
+  <xsd:element name="interval" type="xsd:positiveInteger"/>
+  <xsd:element name="sendRequestMessage" type="xsd:string"/>
+
+  <xsd:element name="contacts">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element ref="contact" maxOccurs="unbounded" minOccurs="1"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+</xsd:schema>

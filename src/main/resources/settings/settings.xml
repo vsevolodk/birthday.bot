@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<birthdayBot xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns="urn:birthdaybot:1.0"
+             xsi:schemaLocation="settings.xsd">
+
+    <login>yor_bot_skype_login</login>
+    <interval>30</interval>
+    <sendRequestMessage>Hi, I'm bot</sendRequestMessage>
+
+    <contacts>
+        <contact>
+            <skype>John Smith</skype>
+            <bDay>1999-09-09</bDay>
+            <topicName>John S.</topicName>
+        </contact>
+        <contact>
+            <skype>John Connor</skype>
+            <bDay>1999-09-09</bDay>
+            <topicName>John C.</topicName>
+        </contact>
+    </contacts>
+</birthdayBot>
