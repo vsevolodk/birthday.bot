@@ -16,29 +16,31 @@ public class PingRunner extends Thread {
 
     @Override
     public void run() {
-        final ChatRepository chatRepository = ChatRepository.getInstance();
+        while (true) {
+            final ChatRepository chatRepository = ChatRepository.getInstance();
 
-        final List<ChatForBDay> chats = chatRepository.getChats();
+            final List<ChatForBDay> chats = chatRepository.getChats();
 
-        for (final ChatForBDay chat : chats) {
-            ContactWithBDay contactWithBDay = chat.getContactWithBDay();
-            contactWithBDay.getBirthDay();
+            for (final ChatForBDay chat : chats) {
+                ContactWithBDay contactWithBDay = chat.getContactWithBDay();
+                contactWithBDay.getBirthDay();
 
-            final DateTime nextBDay = contactWithBDay.getBirthDay().withYear(DateTime.now().getYear());
-            final Days days = Days.daysBetween(new DateTime().toLocalDate(), nextBDay.toLocalDate());
+                final DateTime nextBDay = contactWithBDay.getBirthDay().withYear(DateTime.now().getYear());
+                final Days days = Days.daysBetween(new DateTime().toLocalDate(), nextBDay.toLocalDate());
+
+                try {
+                    chat.sendMessage(getMessage(days.getDays()));
+                } catch (ConnectionException e) {
+                    e.printStackTrace();
+                }
+            }
 
             try {
-                chat.sendMessage(getMessage(days.getDays()));
-            } catch (ConnectionException e) {
+                //one day
+                Thread.sleep(24 * 60 * 60 * 1000);
+            } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }
-
-        try {
-            //one day
-            Thread.sleep(24*60*60*1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
