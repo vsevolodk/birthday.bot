@@ -47,6 +47,7 @@ public class BirthdayChatCreator extends Thread {
                         e.printStackTrace();
                     }
                     chatRepository.addChat(groupChat);
+                    
                 }
             }
 
@@ -60,13 +61,20 @@ public class BirthdayChatCreator extends Thread {
 
     private ChatForBDay createGroupChat(ContactWithBDay bDayHuman) throws ConnectionException {
         List<ContactWithBDay> users = contactRepository.getUsersWithout(Collections.singletonList(bDayHuman));
-        GroupChat groupChat = skype.createGroupChat(users.toArray(new Contact[users.size()]));
+        GroupChat groupChat = null;
+        try {
+            groupChat = skype.createGroupChat(users.toArray(new Contact[users.size()]));
+        } catch (ConnectionException e) {
+            e.printStackTrace();
+        }
         String topic = String.format(
-                "Ð”Ð  %s %s",
+                "ÄÐ %s %s",
                 bDayHuman.getTopicName(),
                 bDayHuman.getBirthDay().toString("dd.MM." + DateTime.now().getYear())
         );
-        groupChat.setTopic(topic);
+        if (groupChat != null) {
+            groupChat.setTopic(topic);
+        }
 
         return new ChatForBDay(groupChat, bDayHuman);
     }
