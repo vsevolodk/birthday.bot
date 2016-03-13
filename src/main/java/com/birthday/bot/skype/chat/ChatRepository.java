@@ -12,7 +12,7 @@ import java.util.*;
 
 /**
  * Repository for active birthday chats.
- *
+ * <p/>
  * Created by Vsevolod Kaimashnikov on 22.02.2016.
  */
 public class ChatRepository {
@@ -29,7 +29,7 @@ public class ChatRepository {
 
     private final SerializationHelper<ChatForBDayState> serializationHelper = new XStreamSerializationHelper<ChatForBDayState>();
 
-    public ChatRepository (final Map<String, ChatForBDay> chats) {
+    public ChatRepository(final Map<String, ChatForBDay> chats) {
         this.chats = chats;
     }
 
@@ -49,11 +49,17 @@ public class ChatRepository {
             return;
         }
         final ChatForBDayState state = chat.getState();
-        if (state.getFileName() != null) {
+        if (state.getFileName() == null) {
             state.setFileName(UUID.randomUUID().toString());
         }
         saveChatAsXML(state);
         chats.put(chat.getIdentity(), chat);
+        System.out.println(
+                String.format("Chat is added to repository: %s for %s",
+                        chat.getTopic(),
+                        chat.getContactWithBDay().getUsername()
+                )
+        );
     }
 
     private void saveChatAsXML(final ChatForBDayState state) {

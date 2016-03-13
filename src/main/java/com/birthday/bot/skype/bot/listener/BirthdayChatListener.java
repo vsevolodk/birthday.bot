@@ -16,7 +16,7 @@ public class BirthdayChatListener implements Listener{
 
     @EventHandler
     public void onMessage(MessageReceivedEvent e) {
-        System.out.println(e.getMessage().getContent());
+
         Chat chat = e.getChat();
         if (chat instanceof GroupChat) {
 
