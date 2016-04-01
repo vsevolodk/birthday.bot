@@ -4,6 +4,7 @@ import com.birthday.bot.skype.chat.ChatForBDay;
 import com.birthday.bot.skype.chat.ChatRepository;
 import com.birthday.bot.skype.contact.ContactWithBDay;
 import com.samczsun.skype4j.exceptions.ConnectionException;
+import com.samczsun.skype4j.formatting.Message;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 
@@ -29,7 +30,7 @@ public class PingRunner extends Thread {
                 final Days days = Days.daysBetween(new DateTime().toLocalDate(), nextBDay.toLocalDate());
 
                 try {
-                    chat.sendMessage(getMessage(days.getDays()));
+                    chat.sendMessage(Message.fromHtml(getMessage(days.getDays())));
                 } catch (ConnectionException e) {
                     e.printStackTrace();
                 }
@@ -46,9 +47,9 @@ public class PingRunner extends Thread {
 
     private String getMessage(int days) {
         if (days != 1) {
-            return String.format("*%s days left*", days);
+            return String.format("<b>%s days left</b>", days);
         } else {
-            return String.format("*%s day left*", days);
+            return String.format("<b>%s day left</b>", days);
         }
     }
 }
