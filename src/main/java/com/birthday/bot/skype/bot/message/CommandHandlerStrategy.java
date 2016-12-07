@@ -15,7 +15,7 @@ import java.util.StringTokenizer;
  */
 public class CommandHandlerStrategy {
 
-    private static final Map<String, CommandHandler> strategies = new HashMap<String, CommandHandler>(10, 1) {{
+    private static final Map<String, CommandHandler> strategies = new HashMap<String, CommandHandler>(3, 1) {{
         put("\\boption", new AddedOption());
         put("\\bdone", new DeleteChat());
         put("\\bshow", new ShowOptions());

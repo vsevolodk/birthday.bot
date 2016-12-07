@@ -9,9 +9,6 @@ import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.formatting.Message;
 import com.birthday.bot.skype.bot.message.CommandHandlerStrategy;
 
-/**
- * Created by Vsevolod on 21.02.2016.
- */
 public class BirthdayChatListener implements Listener{
 
     @EventHandler
