@@ -1,5 +1,7 @@
 package com.birthday.bot.skype.job;
 
+import com.birthday.bot.skype.bot.job.BirthdayChatCreatorJob;
+import com.birthday.bot.skype.bot.job.PingChatJob;
 import com.birthday.bot.skype.bot.job.ReLoginJob;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -35,8 +37,8 @@ public class BotJobManager {
         scheduler.start();
 
         scheduleReLoginJob(scheduler, 0);
-        scheduleJob(scheduler, "birthdayChatCreator", 1);
-        scheduleJob(scheduler, "pingRunner", 1);
+        scheduleJob(scheduler, BirthdayChatCreatorJob.class, "birthdayChatCreator", 1);
+        scheduleJob(scheduler, PingChatJob.class, "pingRunner", 1);
     }
 
     private static void scheduleReLoginJob(final Scheduler scheduler, int minute) throws SchedulerException {
@@ -55,10 +57,11 @@ public class BotJobManager {
 
     private static void scheduleJob(
             final Scheduler scheduler,
+            final Class jobClass,
             final String name,
             int minute
     ) throws SchedulerException {
-        JobDetail pingRunnerJob = newJob(ReLoginJob.class)
+        JobDetail pingRunnerJob = newJob(jobClass)
                 .withIdentity(name + "Job", "mainGroup")
                 .build();
 

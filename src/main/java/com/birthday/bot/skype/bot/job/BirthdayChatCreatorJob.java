@@ -35,16 +35,23 @@ public class BirthdayChatCreatorJob implements Job {
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
 
+        boolean emptyInterval = true;
         for (final ContactWithBDay contact : contactRepository.getAllContactWithBDays().values()) {
             if (isBirthdayComingSoon(contact) && !chatRepository.isChatExistForUser(contact)) {
+                emptyInterval = false;
                 ChatForBDay groupChat = null;
                 try {
                     groupChat = createGroupChat(contact);
                 } catch (ConnectionException e) {
+                    System.out.println("Creating of group chat is failed");
                     e.printStackTrace();
                 }
                 chatRepository.addChat(groupChat);
             }
+        }
+
+        if (emptyInterval) {
+            System.out.println("During the following " + interval + " days there will be not birthdays");
         }
     }
 
