@@ -7,7 +7,6 @@ import com.samczsun.skype4j.exceptions.NotParticipatingException;
 
 /**
  * Holder for skype instance
- * Created by Vsevolod Kaimashnikov on 05.03.2016.
  */
 public class SkypeHolder {
 
@@ -25,9 +24,13 @@ public class SkypeHolder {
 
     public static void relogin() {
         try {
+            System.out.println("Logout started...");
             instance.logout();
+            System.out.println("Logout successfully");
             Thread.sleep(10 * 1000/* 10 seconds*/);
+            System.out.println("Login started...");
             instance.login();
+            System.out.println("Login successfully");
         } catch (
                 InterruptedException
                         | ConnectionException
