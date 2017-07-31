@@ -2,7 +2,8 @@ package com.birthday.bot.skype.job;
 
 import com.birthday.bot.skype.bot.job.BirthdayChatCreatorJob;
 import com.birthday.bot.skype.bot.job.PingChatJob;
-import com.birthday.bot.skype.bot.job.ReLoginJob;
+import com.birthday.bot.skype.bot.job.UpdateTokenJob;
+import org.quartz.Job;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -21,6 +22,7 @@ public class BotJobManager {
 
     public static void initScheduler() {
         try {
+            System.out.println("Initialization of scheduling...");
             internalInit();
         } catch (SchedulerException e) {
             System.out.println("Scheduler initialization is failed");
@@ -38,12 +40,12 @@ public class BotJobManager {
 
         scheduleReLoginJob(scheduler, 0);
         scheduleJob(scheduler, BirthdayChatCreatorJob.class, "birthdayChatCreator", 1);
-        scheduleJob(scheduler, PingChatJob.class, "pingRunner", 1);
+        scheduleJob(scheduler, PingChatJob.class, "pingRunner", 2);
     }
 
     private static void scheduleReLoginJob(final Scheduler scheduler, int minute) throws SchedulerException {
-        JobDetail reLoginJob = newJob(ReLoginJob.class)
-                .withIdentity("reLoginJob", "mainGroup")
+        JobDetail reLoginJob = newJob(UpdateTokenJob.class)
+                .withIdentity("updateTokenJob", "mainGroup")
                 .build();
 
         Trigger reLoginTrigger = newTrigger()
@@ -57,7 +59,7 @@ public class BotJobManager {
 
     private static void scheduleJob(
             final Scheduler scheduler,
-            final Class jobClass,
+            final Class<? extends Job> jobClass,
             final String name,
             int minute
     ) throws SchedulerException {

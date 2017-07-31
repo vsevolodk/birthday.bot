@@ -28,12 +28,20 @@ import java.util.List;
  */
 public class BirthdayChatCreatorJob implements Job {
 
-    private final Skype skype = SkypeHolder.getSkype();
-    private final ContactRepository contactRepository = ContactRepository.getInstance();
-    private final ChatRepository chatRepository = ChatRepository.getInstance();
-    private final int interval = BirthdayBotSettings.getInstance().getConfiguration().getInterval().intValue();
+    private final Skype skype;
+    private final ContactRepository contactRepository;
+    private final ChatRepository chatRepository;
+    private final int interval;
+
+    public BirthdayChatCreatorJob() {
+        skype = SkypeHolder.getSkype();
+        contactRepository = ContactRepository.getInstance();
+        chatRepository = ChatRepository.getInstance();
+        interval = BirthdayBotSettings.getInstance().getConfiguration().getInterval().intValue();
+    }
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        System.out.println("BirthdayChatCreatorJob executing...");
 
         boolean emptyInterval = true;
         for (final ContactWithBDay contact : contactRepository.getAllContactWithBDays().values()) {

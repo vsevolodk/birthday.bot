@@ -15,8 +15,12 @@ import java.util.List;
 
 public class PingChatJob implements Job {
 
+    public PingChatJob() {
+    }
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+        System.out.println("PingChatJob executing...");
 
         final ChatRepository chatRepository = ChatRepository.getInstance();
 

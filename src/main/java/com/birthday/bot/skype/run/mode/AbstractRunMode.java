@@ -18,10 +18,12 @@ public abstract class AbstractRunMode implements RunMode {
     protected static ListenerRegister listenerRegister = new ListenerRegister();
 
     protected void initSkype() {
+        System.out.println("skype initialization...");
         final String password = readPassword();
         final Skype skype = new SkypeBuilder(settings.getLogin(), password).withAllResources().build();
 
         try {
+            System.out.println("try skype login...");
             skype.login();
         } catch (InvalidCredentialsException | ConnectionException | NotParticipatingException e) {
             System.out.println("Skype login failed");
@@ -29,6 +31,7 @@ public abstract class AbstractRunMode implements RunMode {
             System.exit(0);
         }
         SkypeHolder.setInstance(skype);
+        System.out.println("skype initialization is success");
     }
 
     private String readPassword() {

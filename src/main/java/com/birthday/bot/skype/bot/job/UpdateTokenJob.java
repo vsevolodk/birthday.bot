@@ -5,9 +5,14 @@ import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-public class ReLoginJob implements Job {
+public class UpdateTokenJob implements Job {
+
+    public UpdateTokenJob() {
+    }
+
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        SkypeHolder.relogin();
+        System.out.println("UpdateTokenJob executing...");
+        SkypeHolder.updateToken();
     }
 }

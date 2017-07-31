@@ -22,22 +22,13 @@ public class SkypeHolder {
         return instance;
     }
 
-    public static void relogin() {
+    public static void updateToken() {
         try {
-            System.out.println("Logout started...");
-            instance.logout();
-            System.out.println("Logout successfully");
-            Thread.sleep(10 * 1000/* 10 seconds*/);
-            System.out.println("Login started...");
+            System.out.println("Start updating of skype token via skype4j login...");
             instance.login();
-            System.out.println("Login successfully");
-        } catch (
-                InterruptedException
-                        | ConnectionException
-                        | InvalidCredentialsException
-                        | NotParticipatingException e
-        ) {
-            System.out.println("Relogin of skype is failed");
+            System.out.println("Token is updated");
+        } catch (ConnectionException | NotParticipatingException | InvalidCredentialsException e) {
+            System.out.println("Updating of skype toke is failed");
             e.printStackTrace();
             System.exit(0);
         }
