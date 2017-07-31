@@ -10,6 +10,7 @@ import com.samczsun.skype4j.Skype;
 public class ListenerRegister {
 
     public void process(final Skype skype) {
+        System.out.println("registration of chat listener...");
         skype.getEventDispatcher().registerListener(new BirthdayChatListener());
     }
 }

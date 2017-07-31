@@ -21,6 +21,7 @@ public class DefaultRunMode extends AbstractRunMode {
 
     private void subscribe(final Skype skype) {
         try {
+            System.out.println("skype client subscrubing...");
             skype.subscribe();
         } catch (final ConnectionException e) {
             System.out.println("Skype subscribing for listener is failed");
