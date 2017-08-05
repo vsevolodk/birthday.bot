@@ -12,6 +12,8 @@
         <xsd:element ref="login"/>
         <xsd:element ref="interval"/>
         <xsd:element ref="sendRequestMessage"/>
+        <xsd:element ref="updateTokenMinutes"/>
+        <xsd:element ref="schedulingTime"/>
         <xsd:element ref="contacts"/>
       </xsd:sequence>
     </xsd:complexType>
@@ -32,6 +34,8 @@
   <xsd:element name="login" type="xsd:string"/>
   <xsd:element name="interval" type="xsd:positiveInteger"/>
   <xsd:element name="sendRequestMessage" type="xsd:string"/>
+  <xsd:element name="updateTokenMinutes" type="xsd:positiveInteger"/>
+  <xsd:element name="schedulingTime" type="xsd:string"/>
 
   <xsd:element name="contacts">
     <xsd:complexType>
