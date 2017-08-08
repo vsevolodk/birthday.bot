@@ -30,9 +30,9 @@ public class ObjectFactory {
     private final static QName _Skype_QNAME = new QName("urn:birthdaybot:1.0", "skype");
     private final static QName _SchedulingTime_QNAME = new QName("urn:birthdaybot:1.0", "schedulingTime");
     private final static QName _SendRequestMessage_QNAME = new QName("urn:birthdaybot:1.0", "sendRequestMessage");
+    private final static QName _SkypeLiveInMinutesBeforeReload_QNAME = new QName("urn:birthdaybot:1.0", "skypeLiveInMinutesBeforeReload");
     private final static QName _Login_QNAME = new QName("urn:birthdaybot:1.0", "login");
     private final static QName _Interval_QNAME = new QName("urn:birthdaybot:1.0", "interval");
-    private final static QName _UpdateTokenMinutes_QNAME = new QName("urn:birthdaybot:1.0", "updateTokenMinutes");
     private final static QName _TopicName_QNAME = new QName("urn:birthdaybot:1.0", "topicName");
 
     /**
@@ -103,6 +103,15 @@ public class ObjectFactory {
     }
 
     /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:birthdaybot:1.0", name = "skypeLiveInMinutesBeforeReload")
+    public JAXBElement<BigInteger> createSkypeLiveInMinutesBeforeReload(BigInteger value) {
+        return new JAXBElement<BigInteger>(_SkypeLiveInMinutesBeforeReload_QNAME, BigInteger.class, null, value);
+    }
+
+    /**
      * Create an instance of {@link JAXBElement }{@code <}{@link String }{@code >}}
      * 
      */
@@ -118,15 +127,6 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "urn:birthdaybot:1.0", name = "interval")
     public JAXBElement<BigInteger> createInterval(BigInteger value) {
         return new JAXBElement<BigInteger>(_Interval_QNAME, BigInteger.class, null, value);
-    }
-
-    /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link BigInteger }{@code >}}
-     * 
-     */
-    @XmlElementDecl(namespace = "urn:birthdaybot:1.0", name = "updateTokenMinutes")
-    public JAXBElement<BigInteger> createUpdateTokenMinutes(BigInteger value) {
-        return new JAXBElement<BigInteger>(_UpdateTokenMinutes_QNAME, BigInteger.class, null, value);
     }
 
     /**

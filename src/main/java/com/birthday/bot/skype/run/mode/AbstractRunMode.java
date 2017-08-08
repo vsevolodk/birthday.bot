@@ -4,11 +4,6 @@ import com.birthday.bot.skype.bot.listener.ListenerRegister;
 import com.birthday.bot.skype.holder.SkypeHolder;
 import com.birthday.bot.skype.settings.BirthdayBot;
 import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
-import com.samczsun.skype4j.Skype;
-import com.samczsun.skype4j.SkypeBuilder;
-import com.samczsun.skype4j.exceptions.ConnectionException;
-import com.samczsun.skype4j.exceptions.InvalidCredentialsException;
-import com.samczsun.skype4j.exceptions.NotParticipatingException;
 
 import java.io.Console;
 
@@ -19,18 +14,9 @@ public abstract class AbstractRunMode implements RunMode {
 
     protected void initSkype() {
         System.out.println("skype initialization...");
+        final String login = settings.getLogin();
         final String password = readPassword();
-        final Skype skype = new SkypeBuilder(settings.getLogin(), password).withAllResources().build();
-
-        try {
-            System.out.println("try skype login...");
-            skype.login();
-        } catch (InvalidCredentialsException | ConnectionException | NotParticipatingException e) {
-            System.out.println("Skype login failed");
-            e.printStackTrace();
-            System.exit(0);
-        }
-        SkypeHolder.setInstance(skype);
+        SkypeHolder.init(login, password);
         System.out.println("skype initialization is success");
     }
 

@@ -39,18 +39,18 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "topicName"
 })
 @XmlRootElement(name = "contact")
-@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
 public class Contact {
 
     @XmlElement(required = true)
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected String skype;
     @XmlElement(required = true)
     @XmlSchemaType(name = "date")
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected XMLGregorianCalendar bDay;
     @XmlElement(required = true)
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected String topicName;
 
     /**
@@ -61,7 +61,7 @@ public class Contact {
      *     {@link String }
      *     
      */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public String getSkype() {
         return skype;
     }
@@ -74,7 +74,7 @@ public class Contact {
      *     {@link String }
      *     
      */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public void setSkype(String value) {
         this.skype = value;
     }
@@ -87,7 +87,7 @@ public class Contact {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public XMLGregorianCalendar getBDay() {
         return bDay;
     }
@@ -100,7 +100,7 @@ public class Contact {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public void setBDay(XMLGregorianCalendar value) {
         this.bDay = value;
     }
@@ -113,7 +113,7 @@ public class Contact {
      *     {@link String }
      *     
      */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public String getTopicName() {
         return topicName;
     }
@@ -126,7 +126,7 @@ public class Contact {
      *     {@link String }
      *     
      */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-06T01:53:04+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public void setTopicName(String value) {
         this.topicName = value;
     }

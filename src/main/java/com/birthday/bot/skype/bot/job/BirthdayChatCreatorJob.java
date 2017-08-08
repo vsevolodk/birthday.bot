@@ -28,20 +28,17 @@ import java.util.List;
  */
 public class BirthdayChatCreatorJob implements Job {
 
-    private final Skype skype;
-    private final ContactRepository contactRepository;
-    private final ChatRepository chatRepository;
     private final int interval;
 
     public BirthdayChatCreatorJob() {
-        skype = SkypeHolder.getSkype();
-        contactRepository = ContactRepository.getInstance();
-        chatRepository = ChatRepository.getInstance();
         interval = BirthdayBotSettings.getInstance().getConfiguration().getInterval().intValue();
     }
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         System.out.println("BirthdayChatCreatorJob executing...");
+
+        ChatRepository chatRepository = ChatRepository.getInstance();
+        ContactRepository contactRepository = ContactRepository.getInstance();
 
         boolean emptyInterval = true;
         for (final ContactWithBDay contact : contactRepository.getAllContactWithBDays().values()) {
@@ -64,6 +61,10 @@ public class BirthdayChatCreatorJob implements Job {
     }
 
     private ChatForBDay createGroupChat(ContactWithBDay bDayHuman) throws ConnectionException {
+
+        Skype skype = SkypeHolder.getSkype();
+        ContactRepository contactRepository = ContactRepository.getInstance();
+
         List<ContactWithBDay> users = contactRepository.getUsersWithout(Collections.singletonList(bDayHuman));
         GroupChat groupChat = null;
         try {

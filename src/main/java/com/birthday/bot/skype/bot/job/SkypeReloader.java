@@ -1,18 +1,18 @@
 package com.birthday.bot.skype.bot.job;
 
-import com.birthday.bot.skype.holder.SkypeHolder;
+import com.birthday.bot.skype.Reloader;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-public class UpdateTokenJob implements Job {
+public class SkypeReloader implements Job {
 
-    public UpdateTokenJob() {
+    public SkypeReloader() {
     }
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println("UpdateTokenJob executing...");
-        SkypeHolder.updateToken();
+        System.out.println("SkypeReloader executing...");
+        Reloader.reload();
     }
 }

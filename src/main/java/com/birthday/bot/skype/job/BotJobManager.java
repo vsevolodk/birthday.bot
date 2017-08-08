@@ -2,7 +2,7 @@ package com.birthday.bot.skype.job;
 
 import com.birthday.bot.skype.bot.job.BirthdayChatCreatorJob;
 import com.birthday.bot.skype.bot.job.PingChatJob;
-import com.birthday.bot.skype.bot.job.UpdateTokenJob;
+import com.birthday.bot.skype.bot.job.SkypeReloader;
 import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
 import org.quartz.Job;
 import org.quartz.JobDetail;
@@ -37,8 +37,8 @@ public class BotJobManager {
 
         scheduler.start();
 
-        int updateTokenMinutes = BirthdayBotSettings.getInstance().getConfiguration()
-                .getUpdateTokenMinutes()
+        int skypeLiveInMinutesBeforeReload = BirthdayBotSettings.getInstance().getConfiguration()
+                .getSkypeLiveInMinutesBeforeReload()
                 .intValue();
 
         String schedulingTime = BirthdayBotSettings.getInstance().getConfiguration()
@@ -47,18 +47,21 @@ public class BotJobManager {
         int hour = Integer.valueOf(time[0]);
         int minute = Integer.valueOf(time[1]);
 
-        scheduleUpdateTokenJob(scheduler, updateTokenMinutes);
+        scheduleSkypeReloadJob(scheduler, skypeLiveInMinutesBeforeReload);
         scheduleJob(scheduler, BirthdayChatCreatorJob.class, "birthdayChatCreator", hour, minute);
         scheduleJob(scheduler, PingChatJob.class, "pingRunner", hour, minute + 5);
     }
 
-    private static void scheduleUpdateTokenJob(final Scheduler scheduler, int repeatMinutes) throws SchedulerException {
-        JobDetail reLoginJob = newJob(UpdateTokenJob.class)
-                .withIdentity("updateTokenJob", "mainGroup")
+    private static void scheduleSkypeReloadJob(
+            final Scheduler scheduler,
+            int repeatMinutes
+    ) throws SchedulerException {
+        JobDetail reLoginJob = newJob(SkypeReloader.class)
+                .withIdentity("skypeReloadJob", "mainGroup")
                 .build();
 
         Trigger reLoginTrigger = newTrigger()
-                .withIdentity("reLoginTrigger", "mainGroup")
+                .withIdentity("skypeReloadTrigger", "mainGroup")
                 .startNow()
                 .withSchedule(
                         simpleSchedule()

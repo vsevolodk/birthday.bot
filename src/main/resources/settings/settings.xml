@@ -7,7 +7,7 @@
     <login>yor_bot_skype_login</login>
     <interval>30</interval>
     <sendRequestMessage>Hi, I'm bot</sendRequestMessage>
-    <updateTokenMinutes>600</updateTokenMinutes>
+    <skypeLiveInMinutesBeforeReload>600</skypeLiveInMinutesBeforeReload>
     <schedulingTime>10:00</schedulingTime>
 
     <contacts>

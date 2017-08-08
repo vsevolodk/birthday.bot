@@ -17,15 +17,26 @@ import java.util.*;
  */
 public class ChatRepository {
 
-    private static class SingletonHolder {
-        private static final ChatRepository instance = ChatRepositoryFactory.create();
-    }
+    private static volatile ChatRepository instance;
 
     public static ChatRepository getInstance() {
-        return SingletonHolder.instance;
+        ChatRepository localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ChatRepository.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = ChatRepositoryFactory.create();
+                }
+            }
+        }
+        return localInstance;
     }
 
-    private Map<String, ChatForBDay> chats;
+    public synchronized static void reload() {
+        instance = ChatRepositoryFactory.create();
+    }
+
+    private final Map<String, ChatForBDay> chats;
 
     private final SerializationHelper<ChatForBDayState> serializationHelper = new XStreamSerializationHelper<ChatForBDayState>();
 
