@@ -1,23 +1,25 @@
 package com.birthday.bot.skype.run.mode;
 
-import com.birthday.bot.skype.bot.listener.ListenerRegister;
 import com.birthday.bot.skype.holder.SkypeHolder;
 import com.birthday.bot.skype.settings.BirthdayBot;
 import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.Console;
 
 public abstract class AbstractRunMode implements RunMode {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(AbstractRunMode.class);
+
     protected static BirthdayBot settings = BirthdayBotSettings.getInstance().getConfiguration();
-    protected static ListenerRegister listenerRegister = new ListenerRegister();
 
     protected void initSkype() {
-        System.out.println("skype initialization...");
+        LOGGER.info("skype initialization...");
         final String login = settings.getLogin();
         final String password = readPassword();
         SkypeHolder.init(login, password);
-        System.out.println("skype initialization is success");
+        LOGGER.info("skype initialization is success");
     }
 
     private String readPassword() {

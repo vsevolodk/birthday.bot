@@ -7,6 +7,8 @@ import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.birthday.bot.skype.holder.SkypeHolder;
 import com.birthday.bot.skype.settings.Contacts;
 import org.joda.time.DateTime;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.util.*;
@@ -16,6 +18,8 @@ import java.util.*;
  * Created by Vsevolod Kaimashnikov on 27.02.2016.
  */
 public class ContactRepositoryFactory {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContactRepositoryFactory.class);
 
     public static ContactRepository create() {
         try {
@@ -41,6 +45,10 @@ public class ContactRepositoryFactory {
             final ContactWithBDay contactWithBDay = new ContactWithBDay(skypeContact, bDay, topicName);
 
             result.put(contactWithBDay.getUsername(), contactWithBDay);
+        }
+
+        if (result.size() != contactList.size()) {
+            LOGGER.error("Loaded contacts size doesn't equal to settings contact size");
         }
 
         return result;

@@ -5,11 +5,15 @@ import com.samczsun.skype4j.SkypeBuilder;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.samczsun.skype4j.exceptions.InvalidCredentialsException;
 import com.samczsun.skype4j.exceptions.NotParticipatingException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Holder for skype instance
  */
 public class SkypeHolder {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(SkypeHolder.class);
 
   private static Skype instance;
   private static String login;
@@ -21,16 +25,15 @@ public class SkypeHolder {
       logout();
       final Skype skype = new SkypeBuilder(login, password).withAllResources().build();
       try {
-        System.out.println("try skype login...");
+        LOGGER.info("try skype login...");
         skype.login();
-        System.out.println("Login is success");
+        LOGGER.info("Login is success");
       } catch (InvalidCredentialsException | ConnectionException | NotParticipatingException e) {
-        System.out.println("Skype login failed");
-        e.printStackTrace();
+        LOGGER.error("Skype login failed", e);
         System.exit(0);
       }
       instance = skype;
-      System.out.println("Skype rebuild is success");
+      LOGGER.info("Skype rebuild is success");
     }
   }
 
@@ -46,11 +49,11 @@ public class SkypeHolder {
       return;
     }
     try {
-      System.out.println("Try logout");
+      LOGGER.info("Try logout");
       instance.logout();
-      System.out.println("Logout is success");
+      LOGGER.info("Logout is success");
     } catch (ConnectionException e) {
-      e.printStackTrace();
+      LOGGER.error("Logout failed", e);
     } finally {
       instance = null;
     }
@@ -64,7 +67,7 @@ public class SkypeHolder {
     }
   }
 
-  public static Skype getSkype() {
+  public static synchronized Skype getSkype() {
     return instance;
   }
 }

@@ -5,6 +5,8 @@ import com.birthday.bot.tools.serialization.SerializationHelper;
 import com.birthday.bot.tools.serialization.XStreamSerializationHelper;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.samczsun.skype4j.user.Contact;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static com.birthday.bot.tools.file.FileUtils.*;
 
@@ -16,6 +18,8 @@ import java.util.*;
  * Created by Vsevolod Kaimashnikov on 22.02.2016.
  */
 public class ChatRepository {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(ChatRepository.class);
 
     private static volatile ChatRepository instance;
 
@@ -57,6 +61,7 @@ public class ChatRepository {
 
     public void addChat(final ChatForBDay chat) {
         if (chat == null) {
+            LOGGER.info("ChatRepository.addChat: chat is null");
             return;
         }
         final ChatForBDayState state = chat.getState();
@@ -65,11 +70,10 @@ public class ChatRepository {
         }
         saveChatAsXML(state);
         chats.put(chat.getIdentity(), chat);
-        System.out.println(
-                String.format("Chat is added to repository: %s for %s",
-                        chat.getTopic(),
-                        chat.getContactWithBDay().getUsername()
-                )
+        LOGGER.info(
+                "Chat is added to repository: {} for {}",
+                chat.getTopic(),
+                chat.getContactWithBDay().getUsername()
         );
     }
 

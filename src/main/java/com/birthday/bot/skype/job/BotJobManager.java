@@ -11,6 +11,8 @@ import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.Trigger;
 import org.quartz.impl.StdSchedulerFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.quartz.CronScheduleBuilder.dailyAtHourAndMinute;
 import static org.quartz.JobBuilder.newJob;
@@ -19,13 +21,14 @@ import static org.quartz.TriggerBuilder.newTrigger;
 
 public class BotJobManager {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(BotJobManager.class);
+
     public static void initScheduler() {
         try {
-            System.out.println("Initialization of scheduling...");
+            LOGGER.info("Initialization of scheduling...");
             internalInit();
         } catch (SchedulerException e) {
-            System.out.println("Scheduler initialization is failed");
-            e.printStackTrace();
+            LOGGER.error("Scheduler initialization is failed", e);
             System.exit(0);
         }
     }

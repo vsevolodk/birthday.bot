@@ -10,17 +10,21 @@ import org.joda.time.Days;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class PingChatJob implements Job {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(PingChatJob.class);
 
     public PingChatJob() {
     }
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println("PingChatJob executing...");
+        LOGGER.info("PingChatJob executing...");
 
         final ChatRepository chatRepository = ChatRepository.getInstance();
 
@@ -36,7 +40,7 @@ public class PingChatJob implements Job {
             try {
                 chat.sendMessage(Message.fromHtml(getMessage(days.getDays())));
             } catch (ConnectionException e) {
-                e.printStackTrace();
+                LOGGER.error("Ping chat " + chat.getIdentity() + " failed", e);
             }
         }
     }
