@@ -4,11 +4,15 @@ import com.birthday.bot.skype.run.mode.ContactsAddingRunMode;
 import com.birthday.bot.skype.run.mode.DefaultRunMode;
 import com.birthday.bot.skype.run.mode.RunMode;
 import com.birthday.bot.skype.run.mode.SyncChatRunMode;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class RunModeResolver {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(RunModeResolver.class);
 
     private static final String CONTACTS_ADDING = "contactsAdding";
     private static final String SYNC_CHATS = "syncChats";
@@ -27,7 +31,7 @@ public class RunModeResolver {
             if (runMode != null) {
                 return runMode;
             } else {
-                System.out.println("Wrong running mode '" + mode + "'");
+                LOGGER.error("Wrong running mode '{}'", mode);
                 System.exit(0);
             }
         } else {

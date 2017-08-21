@@ -15,6 +15,8 @@ import org.joda.time.Days;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,20 +30,19 @@ import java.util.List;
  */
 public class BirthdayChatCreatorJob implements Job {
 
-    private final Skype skype;
-    private final ContactRepository contactRepository;
-    private final ChatRepository chatRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(BirthdayChatCreatorJob.class);
+
     private final int interval;
 
     public BirthdayChatCreatorJob() {
-        skype = SkypeHolder.getSkype();
-        contactRepository = ContactRepository.getInstance();
-        chatRepository = ChatRepository.getInstance();
         interval = BirthdayBotSettings.getInstance().getConfiguration().getInterval().intValue();
     }
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
-        System.out.println("BirthdayChatCreatorJob executing...");
+        LOGGER.info("BirthdayChatCreatorJob executing...");
+
+        ChatRepository chatRepository = ChatRepository.getInstance();
+        ContactRepository contactRepository = ContactRepository.getInstance();
 
         boolean emptyInterval = true;
         for (final ContactWithBDay contact : contactRepository.getAllContactWithBDays().values()) {
@@ -51,36 +52,46 @@ public class BirthdayChatCreatorJob implements Job {
                 try {
                     groupChat = createGroupChat(contact);
                 } catch (ConnectionException e) {
-                    System.out.println("Creating of group chat is failed");
-                    e.printStackTrace();
+                    LOGGER.error("Creating of group chat is failed", e);
                 }
-                chatRepository.addChat(groupChat);
+                if (groupChat != null) {
+                    chatRepository.addChat(groupChat);
+                } else {
+                    LOGGER.error(
+                            "Group creating failed for contact {}. Attempt will be in next iteration",
+                            contact.getUsername()
+                    );
+                }
             }
         }
 
         if (emptyInterval) {
-            System.out.println("During the following " + interval + " days there will be not birthdays");
+            LOGGER.info("During the following {} days there will be not birthdays", interval);
         }
     }
 
     private ChatForBDay createGroupChat(ContactWithBDay bDayHuman) throws ConnectionException {
+
+        Skype skype = SkypeHolder.getSkype();
+        ContactRepository contactRepository = ContactRepository.getInstance();
+
         List<ContactWithBDay> users = contactRepository.getUsersWithout(Collections.singletonList(bDayHuman));
-        GroupChat groupChat = null;
+
         try {
-            groupChat = skype.createGroupChat(users.toArray(new Contact[users.size()]));
-        } catch (ConnectionException e) {
-            e.printStackTrace();
-        }
-        String topic = String.format(
-                "ДР %s %s",
-                bDayHuman.getTopicName(),
-                bDayHuman.getBirthDay().toString("dd.MM." + DateTime.now().getYear())
-        );
-        if (groupChat != null) {
+            GroupChat groupChat = skype.createGroupChat(users.toArray(new Contact[users.size()]));
+
+            String topic = String.format(
+                    "ДР %s %s",
+                    bDayHuman.getTopicName(),
+                    bDayHuman.getBirthDay().toString("dd.MM." + DateTime.now().getYear())
+            );
             groupChat.setTopic(topic);
+            return new ChatForBDay(groupChat, bDayHuman);
+        } catch (ConnectionException e) {
+            LOGGER.error("createGroupChat method failed", e);
         }
 
-        return new ChatForBDay(groupChat, bDayHuman);
+        return null;
     }
 
     private boolean isBirthdayComingSoon(final ContactWithBDay contact) {

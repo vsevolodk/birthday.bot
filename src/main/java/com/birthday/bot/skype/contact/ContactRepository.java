@@ -10,12 +10,23 @@ import java.util.Map;
  */
 public class ContactRepository {
 
-    private static class SingletonHolder {
-        private static final ContactRepository instance = ContactRepositoryFactory.create();
+    private static volatile ContactRepository instance;
+
+    public static ContactRepository getInstance() {
+        ContactRepository localInstance = instance;
+        if (localInstance == null) {
+            synchronized (ContactRepository.class) {
+                localInstance = instance;
+                if (localInstance == null) {
+                    instance = localInstance = ContactRepositoryFactory.create();
+                }
+            }
+        }
+        return localInstance;
     }
 
-    public static ContactRepository getInstance () {
-        return SingletonHolder.instance;
+    public synchronized static void reload() {
+        instance = ContactRepositoryFactory.create();
     }
 
     private final Map<String, ContactWithBDay> contacts;

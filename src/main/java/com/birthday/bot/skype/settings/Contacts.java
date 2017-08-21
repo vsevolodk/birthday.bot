@@ -3,6 +3,7 @@ package com.birthday.bot.skype.settings;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -33,10 +34,12 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "", propOrder = {
     "contact"
 })
-@XmlRootElement(name = "contacts", namespace = "urn:birthdaybot:1.0")
+@XmlRootElement(name = "contacts")
+@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
 public class Contacts {
 
-    @XmlElement(namespace = "urn:birthdaybot:1.0", required = true)
+    @XmlElement(required = true)
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected List<Contact> contact;
 
     /**
@@ -61,6 +64,7 @@ public class Contacts {
      * 
      * 
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public List<Contact> getContact() {
         if (contact == null) {
             contact = new ArrayList<Contact>();

@@ -2,6 +2,7 @@
 package com.birthday.bot.skype.settings;
 
 import java.math.BigInteger;
+import javax.annotation.Generated;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -23,6 +24,8 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element ref="{urn:birthdaybot:1.0}login"/>
  *         &lt;element ref="{urn:birthdaybot:1.0}interval"/>
  *         &lt;element ref="{urn:birthdaybot:1.0}sendRequestMessage"/>
+ *         &lt;element ref="{urn:birthdaybot:1.0}skypeLiveInMinutesBeforeReload"/>
+ *         &lt;element ref="{urn:birthdaybot:1.0}schedulingTime"/>
  *         &lt;element ref="{urn:birthdaybot:1.0}contacts"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
@@ -37,19 +40,33 @@ import javax.xml.bind.annotation.XmlType;
     "login",
     "interval",
     "sendRequestMessage",
+    "skypeLiveInMinutesBeforeReload",
+    "schedulingTime",
     "contacts"
 })
-@XmlRootElement(name = "birthdayBot", namespace = "urn:birthdaybot:1.0")
+@XmlRootElement(name = "birthdayBot")
+@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
 public class BirthdayBot {
 
-    @XmlElement(namespace = "urn:birthdaybot:1.0", required = true)
+    @XmlElement(required = true)
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected String login;
-    @XmlElement(namespace = "urn:birthdaybot:1.0", required = true)
+    @XmlElement(required = true)
     @XmlSchemaType(name = "positiveInteger")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected BigInteger interval;
-    @XmlElement(namespace = "urn:birthdaybot:1.0", required = true)
+    @XmlElement(required = true)
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected String sendRequestMessage;
-    @XmlElement(namespace = "urn:birthdaybot:1.0", required = true)
+    @XmlElement(required = true)
+    @XmlSchemaType(name = "positiveInteger")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    protected BigInteger skypeLiveInMinutesBeforeReload;
+    @XmlElement(required = true)
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    protected String schedulingTime;
+    @XmlElement(required = true)
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected Contacts contacts;
 
     /**
@@ -60,6 +77,7 @@ public class BirthdayBot {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public String getLogin() {
         return login;
     }
@@ -72,6 +90,7 @@ public class BirthdayBot {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public void setLogin(String value) {
         this.login = value;
     }
@@ -84,6 +103,7 @@ public class BirthdayBot {
      *     {@link BigInteger }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public BigInteger getInterval() {
         return interval;
     }
@@ -96,6 +116,7 @@ public class BirthdayBot {
      *     {@link BigInteger }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public void setInterval(BigInteger value) {
         this.interval = value;
     }
@@ -108,6 +129,7 @@ public class BirthdayBot {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public String getSendRequestMessage() {
         return sendRequestMessage;
     }
@@ -120,8 +142,61 @@ public class BirthdayBot {
      *     {@link String }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public void setSendRequestMessage(String value) {
         this.sendRequestMessage = value;
+    }
+
+    /**
+     * Gets the value of the skypeLiveInMinutesBeforeReload property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link BigInteger }
+     *     
+     */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    public BigInteger getSkypeLiveInMinutesBeforeReload() {
+        return skypeLiveInMinutesBeforeReload;
+    }
+
+    /**
+     * Sets the value of the skypeLiveInMinutesBeforeReload property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link BigInteger }
+     *     
+     */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    public void setSkypeLiveInMinutesBeforeReload(BigInteger value) {
+        this.skypeLiveInMinutesBeforeReload = value;
+    }
+
+    /**
+     * Gets the value of the schedulingTime property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link String }
+     *     
+     */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    public String getSchedulingTime() {
+        return schedulingTime;
+    }
+
+    /**
+     * Sets the value of the schedulingTime property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link String }
+     *     
+     */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    public void setSchedulingTime(String value) {
+        this.schedulingTime = value;
     }
 
     /**
@@ -132,6 +207,7 @@ public class BirthdayBot {
      *     {@link Contacts }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public Contacts getContacts() {
         return contacts;
     }
@@ -144,6 +220,7 @@ public class BirthdayBot {
      *     {@link Contacts }
      *     
      */
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public void setContacts(Contacts value) {
         this.contacts = value;
     }
