@@ -15,11 +15,13 @@
             <skype>John Smith</skype>
             <bDay>1999-09-09</bDay>
             <topicName>John S.</topicName>
+            <isAdmin>false</isAdmin>
         </contact>
         <contact>
             <skype>John Connor</skype>
             <bDay>1999-09-09</bDay>
             <topicName>John C.</topicName>
+            <isAdmin>false</isAdmin>
         </contact>
     </contacts>
 </birthdayBot>

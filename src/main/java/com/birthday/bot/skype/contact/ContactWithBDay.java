@@ -19,11 +19,17 @@ public class ContactWithBDay implements Contact {
     private final Contact contact;
     private final DateTime birthDay;
     private final String topicName;
+    private final boolean isAdmin;
 
-    public ContactWithBDay(Contact contact, DateTime date, String topicName) {
+    public ContactWithBDay(Contact contact, DateTime date, String topicName, boolean isAdmin) {
         this.contact = contact;
         this.birthDay = date;
         this.topicName = topicName;
+        this.isAdmin=isAdmin;
+    }
+
+    public boolean isAdmin() {
+        return isAdmin;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.birthday.bot.skype.bot.message.handler.impl;
+package com.birthday.bot.skype.bot.message.handler.impl.group;
 
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;

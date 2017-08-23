@@ -3,6 +3,7 @@ package com.birthday.bot.skype.job;
 import com.birthday.bot.skype.bot.job.BirthdayChatCreatorJob;
 import com.birthday.bot.skype.bot.job.PingChatJob;
 import com.birthday.bot.skype.bot.job.SkypeReloader;
+import com.birthday.bot.skype.holder.SchedulerHolder;
 import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
 import org.quartz.Job;
 import org.quartz.JobDetail;
@@ -37,6 +38,7 @@ public class BotJobManager {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
         Scheduler scheduler = schedulerFactory.getScheduler();
+        SchedulerHolder.init(scheduler);
 
         scheduler.start();
 

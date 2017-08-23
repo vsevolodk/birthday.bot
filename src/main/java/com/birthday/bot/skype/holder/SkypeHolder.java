@@ -29,7 +29,7 @@ public class SkypeHolder {
         skype.login();
         LOGGER.info("Login is success");
       } catch (InvalidCredentialsException | ConnectionException | NotParticipatingException e) {
-        LOGGER.error("Skype login failed", e);
+        LOGGER.error("Skype login failed, application wil be shutdown", e);
         System.exit(0);
       }
       instance = skype;
@@ -53,7 +53,7 @@ public class SkypeHolder {
       instance.logout();
       LOGGER.info("Logout is success");
     } catch (ConnectionException e) {
-      LOGGER.error("Logout failed", e);
+      LOGGER.error("Logout failed, but skype instance will be rebuild", e);
     } finally {
       instance = null;
     }

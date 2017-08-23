@@ -35,11 +35,11 @@ import javax.xml.bind.annotation.XmlType;
     "contact"
 })
 @XmlRootElement(name = "contacts")
-@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+@Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-21T09:39:07+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
 public class Contacts {
 
     @XmlElement(required = true)
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-21T09:39:07+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     protected List<Contact> contact;
 
     /**
@@ -64,7 +64,7 @@ public class Contacts {
      * 
      * 
      */
-    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-09T01:44:38+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
+    @Generated(value = "com.sun.tools.internal.xjc.Driver", date = "2017-08-21T09:39:07+04:00", comments = "JAXB RI v2.2.8-b130911.1802")
     public List<Contact> getContact() {
         if (contact == null) {
             contact = new ArrayList<Contact>();

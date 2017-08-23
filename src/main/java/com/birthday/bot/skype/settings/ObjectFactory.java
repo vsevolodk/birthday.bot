@@ -33,6 +33,7 @@ public class ObjectFactory {
     private final static QName _SkypeLiveInMinutesBeforeReload_QNAME = new QName("urn:birthdaybot:1.0", "skypeLiveInMinutesBeforeReload");
     private final static QName _Login_QNAME = new QName("urn:birthdaybot:1.0", "login");
     private final static QName _Interval_QNAME = new QName("urn:birthdaybot:1.0", "interval");
+    private final static QName _IsAdmin_QNAME = new QName("urn:birthdaybot:1.0", "isAdmin");
     private final static QName _TopicName_QNAME = new QName("urn:birthdaybot:1.0", "topicName");
 
     /**
@@ -127,6 +128,15 @@ public class ObjectFactory {
     @XmlElementDecl(namespace = "urn:birthdaybot:1.0", name = "interval")
     public JAXBElement<BigInteger> createInterval(BigInteger value) {
         return new JAXBElement<BigInteger>(_Interval_QNAME, BigInteger.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link Boolean }{@code >}}
+     * 
+     */
+    @XmlElementDecl(namespace = "urn:birthdaybot:1.0", name = "isAdmin")
+    public JAXBElement<Boolean> createIsAdmin(Boolean value) {
+        return new JAXBElement<Boolean>(_IsAdmin_QNAME, Boolean.class, null, value);
     }
 
     /**
