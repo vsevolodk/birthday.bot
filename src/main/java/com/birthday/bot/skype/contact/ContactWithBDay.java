@@ -4,7 +4,7 @@ import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.exceptions.ChatNotFoundException;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.samczsun.skype4j.exceptions.NoSuchContactException;
-import com.samczsun.skype4j.user.Contact;
+import com.samczsun.skype4j.participants.info.Contact;
 import org.joda.time.DateTime;
 
 import java.awt.image.BufferedImage;

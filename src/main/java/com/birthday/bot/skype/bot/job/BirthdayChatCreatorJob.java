@@ -6,7 +6,7 @@ import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.chat.GroupChat;
 import com.samczsun.skype4j.exceptions.ConnectionException;
-import com.samczsun.skype4j.user.Contact;
+import com.samczsun.skype4j.participants.info.Contact;
 import com.birthday.bot.skype.chat.ChatForBDay;
 import com.birthday.bot.skype.chat.ChatRepository;
 import com.birthday.bot.skype.contact.ContactRepository;

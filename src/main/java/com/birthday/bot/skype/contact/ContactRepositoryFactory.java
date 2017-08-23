@@ -40,7 +40,7 @@ public class ContactRepositoryFactory {
             final DateTime bDay = getDate(contact.getBDay());
             final String topicName = contact.getTopicName();
 
-            com.samczsun.skype4j.user.Contact skypeContact = skype.getOrLoadContact(skypeId);
+            com.samczsun.skype4j.participants.info.Contact skypeContact = skype.getOrLoadContact(skypeId);
 
             final ContactWithBDay contactWithBDay = new ContactWithBDay(skypeContact, bDay, topicName);
 

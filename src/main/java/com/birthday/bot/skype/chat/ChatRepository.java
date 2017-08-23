@@ -4,7 +4,7 @@ import com.birthday.bot.tools.Const;
 import com.birthday.bot.tools.serialization.SerializationHelper;
 import com.birthday.bot.tools.serialization.XStreamSerializationHelper;
 import com.samczsun.skype4j.exceptions.ConnectionException;
-import com.samczsun.skype4j.user.Contact;
+import com.samczsun.skype4j.participants.info.Contact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

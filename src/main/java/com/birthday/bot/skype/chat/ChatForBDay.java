@@ -5,12 +5,13 @@ import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.chat.GroupChat;
 import com.samczsun.skype4j.chat.messages.ChatMessage;
-import com.samczsun.skype4j.events.chat.user.action.OptionUpdateEvent;
 import com.samczsun.skype4j.exceptions.ConnectionException;
+import com.samczsun.skype4j.exceptions.handler.ErrorHandler;
 import com.samczsun.skype4j.formatting.IMoji;
 import com.samczsun.skype4j.formatting.Message;
-import com.samczsun.skype4j.user.Contact;
-import com.samczsun.skype4j.user.User;
+import com.samczsun.skype4j.participants.Participant;
+import com.samczsun.skype4j.participants.info.Contact;
+import com.samczsun.skype4j.participants.User;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -18,9 +19,7 @@ import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 
-/**
- * Created by Vsevolod Kaimashnikov on 28.02.2016.
- */
+
 public class ChatForBDay implements GroupChat {
 
     private final GroupChat groupChat;
@@ -85,11 +84,6 @@ public class ChatForBDay implements GroupChat {
     }
 
     @Override
-    public Collection<User> getAllUsers() {
-        return groupChat.getAllUsers();
-    }
-
-    @Override
     public Skype getClient() {
         return groupChat.getClient();
     }
@@ -117,21 +111,6 @@ public class ChatForBDay implements GroupChat {
     @Override
     public String getTopic() {
         return groupChat.getTopic();
-    }
-
-    @Override
-    public User getUser(String username) {
-        return groupChat.getUser(username);
-    }
-
-    @Override
-    public boolean isLoaded() {
-        return groupChat.isLoaded();
-    }
-
-    @Override
-    public boolean isOptionEnabled(OptionUpdateEvent.Option option) {
-        return groupChat.isOptionEnabled(option);
     }
 
     @Override
@@ -195,13 +174,78 @@ public class ChatForBDay implements GroupChat {
     }
 
     @Override
-    public void setOptionEnabled(OptionUpdateEvent.Option option, boolean enabled) throws ConnectionException {
-        groupChat.setOptionEnabled(option, enabled);
+    public void setTopic(String topic) throws ConnectionException {
+        groupChat.setTopic(topic);
     }
 
     @Override
-    public void setTopic(String topic) throws ConnectionException {
-        groupChat.setTopic(topic);
+    public void startTyping() {
+        groupChat.startTyping();
+    }
+
+    @Override
+    public boolean isOptionEnabled(Option option) {
+        return groupChat.isOptionEnabled(option);
+    }
+
+    @Override
+    public void setOptionEnabled(Option option, boolean b) throws ConnectionException {
+        groupChat.setOptionEnabled(option, b);
+    }
+
+    @Override
+    public void ban(String s) throws ConnectionException {
+        groupChat.ban(s);
+    }
+
+    @Override
+    public void unban(String s) throws ConnectionException {
+        groupChat.unban(s);
+    }
+
+    @Override
+    public List<String> getBannedIds() {
+        return groupChat.getBannedIds();
+    }
+
+    @Override
+    public void whitelist(String s) throws ConnectionException {
+        groupChat.whitelist(s);
+    }
+
+    @Override
+    public void unwhitelist(String s) throws ConnectionException {
+        groupChat.unwhitelist(s);
+    }
+
+    @Override
+    public List<String> getWhitelistedIds() {
+        return groupChat.getWhitelistedIds();
+    }
+
+    @Override
+    public Participant getParticipant(String s) {
+        return groupChat.getParticipant(s);
+    }
+
+    @Override
+    public Collection<Participant> getAllParticipants() {
+        return groupChat.getAllParticipants();
+    }
+
+    @Override
+    public void startTyping(ErrorHandler errorHandler) {
+        groupChat.startTyping(errorHandler);
+    }
+
+    @Override
+    public void stopTyping() {
+        groupChat.stopTyping();
+    }
+
+    @Override
+    public void sync() throws ConnectionException {
+        groupChat.sync();
     }
 
     public ChatForBDayState getState() {
