@@ -13,7 +13,9 @@ public class HelpHandler extends AbstractAdminCommand {
           "0. \\bHelp - command for list of available command display \n"
             + "1. \\bStatus - command for common metrics display \n"
             + "2. \\bAddContact - command for adding new contact (WIP) \n"
-            + "3. \\bRemoveContact - command for removing new contact (WIP)"
+            + "3. \\bRemoveContact - command for removing new contact (WIP) \n"
+            + "4. \\bPing - command for ping all exist chats \n"
+            + "5. \\bCreate - command for manual create comming soon chats \n"
   );
 
   @Override
