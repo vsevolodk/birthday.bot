@@ -23,8 +23,7 @@ public abstract class AbstractAdminCommand extends CommandHandler {
   public void handle(MessageReceivedEvent messageReceivedEvent) {
     try {
       IndividualChat chat = (IndividualChat) messageReceivedEvent.getMessage().getChat();
-      Participant partner = chat.getPartner();
-      String username = partner.getId();
+      String username = getUserName(chat);
       ContactWithBDay contactWithBDay = ContactRepository.getInstance().getContactWithBDay(username);
       if (contactWithBDay != null) {
         if (contactWithBDay.isAdmin()) {
@@ -43,6 +42,13 @@ public abstract class AbstractAdminCommand extends CommandHandler {
     } catch (ConnectionException e) {
       LOGGER.error(this.getClass().getName() + " is failed", e);
     }
+  }
+
+  private String getUserName(IndividualChat chat) {
+    Participant partner = chat.getPartner();
+    String id = partner.getId();
+    // id is return as 8:nickname, so we cut first 2 chars
+    return id.substring(2);
   }
 
   protected abstract Message getMessage();
