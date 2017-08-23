@@ -18,6 +18,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
 
@@ -32,10 +33,23 @@ public class BirthdayChatCreatorJob implements Job {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BirthdayChatCreatorJob.class);
 
+    private String topicString;
+
     private final int interval;
 
     public BirthdayChatCreatorJob() {
         interval = BirthdayBotSettings.getInstance().getConfiguration().getInterval().intValue();
+        String lTopicString = "ДР %s %s";
+        if ("Linux".equals(System.getProperty("oc.name"))) {
+            topicString = lTopicString;
+        } else {
+            try {
+                topicString = new String(lTopicString.getBytes("UTF-8"), "windows-1251");
+            } catch (UnsupportedEncodingException e) {
+                LOGGER.error("topicString init failed", e);
+                topicString = lTopicString;
+            }
+        }
     }
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -81,7 +95,7 @@ public class BirthdayChatCreatorJob implements Job {
             GroupChat groupChat = skype.createGroupChat(users.toArray(new Contact[users.size()]));
 
             String topic = String.format(
-                    "ДР %s %s",
+                    topicString,
                     bDayHuman.getTopicName(),
                     bDayHuman.getBirthDay().toString("dd.MM." + DateTime.now().getYear())
             );
