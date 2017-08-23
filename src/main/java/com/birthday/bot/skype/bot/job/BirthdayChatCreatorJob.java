@@ -33,21 +33,25 @@ public class BirthdayChatCreatorJob implements Job {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BirthdayChatCreatorJob.class);
 
-    private String topicString;
+    private String topicString = " %s %s";
 
     private final int interval;
 
     public BirthdayChatCreatorJob() {
         interval = BirthdayBotSettings.getInstance().getConfiguration().getInterval().intValue();
-        String lTopicString = "ДР %s %s";
+        processDRChar();
+    }
+
+    private void processDRChar() {
+        String dr = "ДР";;
         if ("Linux".equals(System.getProperty("oc.name"))) {
-            topicString = lTopicString;
+            topicString = dr + topicString;
         } else {
             try {
-                topicString = new String(lTopicString.getBytes("UTF-8"), "windows-1251");
+                topicString = new String(dr.getBytes("windows-1251")) + topicString;
             } catch (UnsupportedEncodingException e) {
                 LOGGER.error("topicString init failed", e);
-                topicString = lTopicString;
+                topicString = dr + topicString;
             }
         }
     }
