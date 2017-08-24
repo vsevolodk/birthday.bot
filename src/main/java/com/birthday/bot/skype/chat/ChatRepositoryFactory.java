@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.birthday.bot.tools.Const.USER_DIR;
 import static com.birthday.bot.tools.file.FileUtils.readFile;
@@ -28,6 +29,8 @@ import static com.birthday.bot.tools.file.FileUtils.readFile;
 public class ChatRepositoryFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ChatRepositoryFactory.class);
+
+    private static final String MANY_REQUEST_CODE = "Response: 429";
 
     public static ChatRepository create() {
         try {
@@ -58,7 +61,7 @@ public class ChatRepositoryFactory {
             String chatIdentity = chatForBDayState.getIdentity();
             String human = chatForBDayState.getbDayHuman();
 
-            final Chat loadChat = skype.getOrLoadChat(chatIdentity);
+            final Chat loadChat = getWithPauseIfNeededChat(skype, chatIdentity);
             if (loadChat != null) {
                 final ChatForBDay chatForBDay = new ChatForBDay(
                         (GroupChat) loadChat,
@@ -71,6 +74,28 @@ public class ChatRepositoryFactory {
         }
         if (fileCount != result.size()) {
             LOGGER.error("Loaded chats size doesn't equal to stored chat size");
+        }
+        return result;
+    }
+
+    private static Chat getWithPauseIfNeededChat(Skype skype, String chatIdentity) {
+        Chat result = null;
+        while (result == null) {
+            try {
+                result = skype.getOrLoadChat(chatIdentity);
+            } catch (Exception e) {
+                if (e.getMessage().contains(MANY_REQUEST_CODE)) {
+                    LOGGER.info("Wait 3 minutes, because many request error from skype");
+                    try {
+                        TimeUnit.MINUTES.sleep(3);
+                    } catch (InterruptedException ee) {
+                        LOGGER.error("Waiting is interrupted", ee);
+                    }
+                } else {
+                    LOGGER.error("Some error in getWithPauseIfNeededChat method", e);
+                }
+            }
+            LOGGER.error("Iteration of loading chat is finished");
         }
         return result;
     }

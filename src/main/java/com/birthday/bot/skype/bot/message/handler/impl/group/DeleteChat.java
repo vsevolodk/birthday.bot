@@ -15,5 +15,6 @@ public class DeleteChat extends CommandHandler {
         final Chat chat = messageReceivedEvent.getChat();
         ChatRepository chatRepository = ChatRepository.getInstance();
         chatRepository.deleteChat(chat.getIdentity());
+        //todo: it does not work
     }
 }

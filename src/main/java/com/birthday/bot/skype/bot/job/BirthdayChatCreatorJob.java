@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class checks every day nearest birthday days.
@@ -79,6 +80,12 @@ public class BirthdayChatCreatorJob implements Job {
                             "Group creating failed for contact {}. Attempt will be in next iteration",
                             contact.getUsername()
                     );
+                }
+                try {
+                    LOGGER.info("Waiting between chat creations");
+                    TimeUnit.MINUTES.sleep(3);
+                } catch (InterruptedException e) {
+                    LOGGER.error("Waiting is interrupted", e);
                 }
             }
         }
