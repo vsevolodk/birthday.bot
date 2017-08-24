@@ -16,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.quartz.CronScheduleBuilder.dailyAtHourAndMinute;
+import static org.quartz.DateBuilder.IntervalUnit.MINUTE;
+import static org.quartz.DateBuilder.futureDate;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
@@ -67,7 +69,7 @@ public class BotJobManager {
 
         Trigger reLoginTrigger = newTrigger()
                 .withIdentity("skypeReloadTrigger", "mainGroup")
-                .startNow()
+                .startAt(futureDate(repeatMinutes, MINUTE))
                 .withSchedule(
                         simpleSchedule()
                                 .withIntervalInMinutes(repeatMinutes)
