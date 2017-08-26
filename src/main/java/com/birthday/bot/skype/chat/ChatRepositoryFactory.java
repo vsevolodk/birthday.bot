@@ -80,10 +80,12 @@ public class ChatRepositoryFactory {
 
     private static Chat getWithPauseIfNeededChat(Skype skype, String chatIdentity) {
         Chat result = null;
+        boolean wasError = false;
         while (result == null) {
             try {
                 result = skype.getOrLoadChat(chatIdentity);
             } catch (Exception e) {
+                wasError = true;
                 if (e.getMessage().contains(MANY_REQUEST_CODE)) {
                     LOGGER.info("Wait 3 minutes, because many request error from skype");
                     try {
@@ -96,6 +98,9 @@ public class ChatRepositoryFactory {
                 }
             }
             LOGGER.error("Iteration of loading chat is finished");
+        }
+        if (wasError) {
+            LOGGER.info("After some iterations all is ok");
         }
         return result;
     }
