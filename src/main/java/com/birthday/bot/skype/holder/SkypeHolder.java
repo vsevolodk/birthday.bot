@@ -52,7 +52,7 @@ public class SkypeHolder {
       LOGGER.info("Try logout");
       instance.logout();
       LOGGER.info("Logout is success");
-    } catch (ConnectionException e) {
+    } catch (Exception e) {
       LOGGER.error("Logout failed, but skype instance will be rebuild", e);
     } finally {
       instance = null;
