@@ -11,7 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.datatype.XMLGregorianCalendar;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Factory for creating contact repository
@@ -39,10 +41,11 @@ public class ContactRepositoryFactory {
             final String skypeId = contact.getSkype();
             final DateTime bDay = getDate(contact.getBDay());
             final String topicName = contact.getTopicName();
+            final boolean isAdmin = contact.isIsAdmin();
 
-            com.samczsun.skype4j.user.Contact skypeContact = skype.getOrLoadContact(skypeId);
+            com.samczsun.skype4j.participants.info.Contact skypeContact = skype.getOrLoadContact(skypeId);
 
-            final ContactWithBDay contactWithBDay = new ContactWithBDay(skypeContact, bDay, topicName);
+            final ContactWithBDay contactWithBDay = new ContactWithBDay(skypeContact, bDay, topicName, isAdmin);
 
             result.put(contactWithBDay.getUsername(), contactWithBDay);
         }

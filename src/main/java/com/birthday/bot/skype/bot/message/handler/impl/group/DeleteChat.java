@@ -1,4 +1,4 @@
-package com.birthday.bot.skype.bot.message.handler.impl;
+package com.birthday.bot.skype.bot.message.handler.impl.group;
 
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
@@ -15,5 +15,6 @@ public class DeleteChat extends CommandHandler {
         final Chat chat = messageReceivedEvent.getChat();
         ChatRepository chatRepository = ChatRepository.getInstance();
         chatRepository.deleteChat(chat.getIdentity());
+        //todo: it does not work
     }
 }

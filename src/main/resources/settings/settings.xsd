@@ -21,12 +21,14 @@
   <xsd:element name="bDay" type="xsd:date"/>
   <xsd:element name="skype" type="xsd:string"/>
   <xsd:element name="topicName" type="xsd:string"/>
+  <xsd:element name="isAdmin" type="xsd:boolean"/>
   <xsd:element name="contact">
     <xsd:complexType>
       <xsd:sequence>
         <xsd:element ref="skype"/>
         <xsd:element ref="bDay"/>
         <xsd:element ref="topicName"/>
+        <xsd:element ref="isAdmin"/>
       </xsd:sequence>
     </xsd:complexType>
   </xsd:element>

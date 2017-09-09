@@ -32,9 +32,9 @@ public class PingChatJob implements Job {
 
         for (final ChatForBDay chat : chats) {
             ContactWithBDay contactWithBDay = chat.getContactWithBDay();
-            contactWithBDay.getBirthDay();
+            DateTime birthDay = contactWithBDay.getBirthDay();
 
-            final DateTime nextBDay = contactWithBDay.getBirthDay().withYear(DateTime.now().getYear());
+            final DateTime nextBDay = birthDay.withYear(DateTime.now().getYear());
             final Days days = Days.daysBetween(new DateTime().toLocalDate(), nextBDay.toLocalDate());
 
             try {

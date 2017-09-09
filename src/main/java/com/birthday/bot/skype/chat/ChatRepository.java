@@ -4,7 +4,8 @@ import com.birthday.bot.tools.Const;
 import com.birthday.bot.tools.serialization.SerializationHelper;
 import com.birthday.bot.tools.serialization.XStreamSerializationHelper;
 import com.samczsun.skype4j.exceptions.ConnectionException;
-import com.samczsun.skype4j.user.Contact;
+import com.samczsun.skype4j.formatting.Message;
+import com.samczsun.skype4j.participants.info.Contact;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -90,9 +91,10 @@ public class ChatRepository {
         final ChatForBDay chat = chats.remove(identity);
         deleteChatAsXML(chat.getState());
         try {
+            chat.sendMessage(Message.fromHtml("<b>Here my work is finished<b>"));
             chat.leave();
-        } catch (ConnectionException e) {
-            e.printStackTrace();
+        } catch (Exception e) {
+            LOGGER.error("Leaving of chat " + identity + "is failed", e);
         }
     }
 

@@ -6,7 +6,7 @@ import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.chat.GroupChat;
 import com.samczsun.skype4j.exceptions.ConnectionException;
-import com.samczsun.skype4j.user.Contact;
+import com.samczsun.skype4j.participants.info.Contact;
 import com.birthday.bot.skype.chat.ChatForBDay;
 import com.birthday.bot.skype.chat.ChatRepository;
 import com.birthday.bot.skype.contact.ContactRepository;
@@ -18,8 +18,10 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This class checks every day nearest birthday days.
@@ -32,10 +34,27 @@ public class BirthdayChatCreatorJob implements Job {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BirthdayChatCreatorJob.class);
 
+    private String topicString = " %s %s";
+
     private final int interval;
 
     public BirthdayChatCreatorJob() {
         interval = BirthdayBotSettings.getInstance().getConfiguration().getInterval().intValue();
+        processDRChar();
+    }
+
+    private void processDRChar() {
+        String dr = "ДР";;
+        if ("Linux".equals(System.getProperty("oc.name"))) {
+            topicString = dr + topicString;
+        } else {
+            try {
+                topicString = new String(dr.getBytes("windows-1251")) + topicString;
+            } catch (UnsupportedEncodingException e) {
+                LOGGER.error("topicString init failed", e);
+                topicString = dr + topicString;
+            }
+        }
     }
 
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -62,6 +81,12 @@ public class BirthdayChatCreatorJob implements Job {
                             contact.getUsername()
                     );
                 }
+                try {
+                    LOGGER.info("Waiting between chat creations");
+                    TimeUnit.MINUTES.sleep(3);
+                } catch (InterruptedException e) {
+                    LOGGER.error("Waiting is interrupted", e);
+                }
             }
         }
 
@@ -81,7 +106,7 @@ public class BirthdayChatCreatorJob implements Job {
             GroupChat groupChat = skype.createGroupChat(users.toArray(new Contact[users.size()]));
 
             String topic = String.format(
-                    "ДР %s %s",
+                    topicString,
                     bDayHuman.getTopicName(),
                     bDayHuman.getBirthDay().toString("dd.MM." + DateTime.now().getYear())
             );

@@ -14,6 +14,7 @@ public class Subscriber {
     Skype skype = SkypeHolder.getSkype();
     LOGGER.info("registration of chat listener...");
     skype.getEventDispatcher().registerListener(new BirthdayChatListener());
+    skype.getEventDispatcher().registerListener(new PrivateConversationForAdministratorListener());
     subscribe(skype);
   }
 

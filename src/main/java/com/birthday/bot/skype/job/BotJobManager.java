@@ -3,6 +3,7 @@ package com.birthday.bot.skype.job;
 import com.birthday.bot.skype.bot.job.BirthdayChatCreatorJob;
 import com.birthday.bot.skype.bot.job.PingChatJob;
 import com.birthday.bot.skype.bot.job.SkypeReloader;
+import com.birthday.bot.skype.holder.SchedulerHolder;
 import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
 import org.quartz.Job;
 import org.quartz.JobDetail;
@@ -15,6 +16,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static org.quartz.CronScheduleBuilder.dailyAtHourAndMinute;
+import static org.quartz.DateBuilder.IntervalUnit.MINUTE;
+import static org.quartz.DateBuilder.futureDate;
 import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
@@ -37,6 +40,7 @@ public class BotJobManager {
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
         Scheduler scheduler = schedulerFactory.getScheduler();
+        SchedulerHolder.init(scheduler);
 
         scheduler.start();
 
@@ -65,7 +69,7 @@ public class BotJobManager {
 
         Trigger reLoginTrigger = newTrigger()
                 .withIdentity("skypeReloadTrigger", "mainGroup")
-                .startNow()
+                .startAt(futureDate(repeatMinutes, MINUTE))
                 .withSchedule(
                         simpleSchedule()
                                 .withIntervalInMinutes(repeatMinutes)
