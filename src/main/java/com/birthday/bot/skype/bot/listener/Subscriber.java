@@ -19,12 +19,15 @@ public class Subscriber {
   }
 
   private static void subscribe(final Skype skype) {
-    try {
-      LOGGER.info("skype client subscrubing...");
-      skype.subscribe();
-    } catch (final ConnectionException e) {
-      LOGGER.error("Skype subscribing for listener is failed", e);
-      System.exit(0);
+    boolean isSuccess = false;
+    while (!isSuccess) {
+      try {
+        LOGGER.info("skype client subscrubing...");
+        skype.subscribe();
+        isSuccess=true;
+      } catch (final ConnectionException e) {
+        LOGGER.error("Skype subscribing for listener is failed. Try again.", e);
+      }
     }
   }
 }

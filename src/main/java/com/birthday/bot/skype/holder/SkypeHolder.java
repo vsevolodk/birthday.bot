@@ -21,26 +21,30 @@ public class SkypeHolder {
 
   public static void reBuildSkype() {
     synchronized (SkypeHolder.class) {
-      checkLoginPassword();
-      logout();
-      final Skype skype = new SkypeBuilder(login, password).withAllResources().build();
-      try {
-        LOGGER.info("try skype login...");
-        skype.login();
-        LOGGER.info("Login is success");
-      } catch (InvalidCredentialsException | ConnectionException | NotParticipatingException e) {
-        LOGGER.error("Skype login failed, application wil be shutdown", e);
-        System.exit(0);
+      boolean isSuccess = false;
+      while (!isSuccess) {
+        checkLoginPassword();
+        logout();
+        final Skype skype = new SkypeBuilder(login, password).withAllResources().build();
+        try {
+          LOGGER.info("try skype login...");
+          skype.login();
+          LOGGER.info("Login is success");
+          isSuccess=true;
+        } catch (InvalidCredentialsException | ConnectionException | NotParticipatingException e) {
+          LOGGER.error("Skype login failed, try again", e);
+        }
+
+        instance = skype;
+        LOGGER.info("Skype rebuild is success");
       }
-      instance = skype;
-      LOGGER.info("Skype rebuild is success");
     }
   }
 
   private static void checkLoginPassword() {
     if (login == null || password == null) {
       throw new IllegalStateException("Skype login or password do not set." +
-              " May be you didn'r call init method");
+              " May be you didn't call init method");
     }
   }
 
