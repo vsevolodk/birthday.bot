@@ -18,6 +18,9 @@ public class FileUtils {
     private static final Logger LOGGER = LoggerFactory.getLogger(FileUtils.class);
 
     public static void write(final String fileName, final String text) {
+        if (fileName == null) {
+            LOGGER.error("Null file name", new NullPointerException());
+        }
 
         final File file = new File(fileName);
 
