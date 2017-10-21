@@ -1,10 +1,13 @@
 package com.birthday.bot.skype.holder;
 
+import com.birthday.bot.skype.mslive.LiveLoginHelper;
+import com.birthday.bot.skype.mslive.MSFTSkypeClient;
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.SkypeBuilder;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.samczsun.skype4j.exceptions.InvalidCredentialsException;
 import com.samczsun.skype4j.exceptions.NotParticipatingException;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,12 +28,17 @@ public class SkypeHolder {
       while (!isSuccess) {
         checkLoginPassword();
         logout();
-        final Skype skype = new SkypeBuilder(login, password).withAllResources().build();
+        final Skype skype;
+        if (login.contains("@")) {
+          skype = buildMicrosoftLiveBuilder();
+        } else {
+          skype = new SkypeBuilder(login, password).withAllResources().build();
+        }
         try {
           LOGGER.info("try skype login...");
           skype.login();
           LOGGER.info("Login is success");
-          isSuccess=true;
+          isSuccess = true;
         } catch (InvalidCredentialsException | ConnectionException | NotParticipatingException e) {
           LOGGER.error("Skype login failed, try again", e);
         }
@@ -39,6 +47,33 @@ public class SkypeHolder {
         LOGGER.info("Skype rebuild is success");
       }
     }
+  }
+
+  private static Skype buildMicrosoftLiveBuilder() {
+    Skype skype = null;
+    while (skype == null) {
+      LOGGER.info("Try build skype via MS account");
+      JSONObject object = null;
+      try {
+        object = LiveLoginHelper.getXTokenObject(
+                login,
+                password
+        );
+      } catch (Exception e) {
+        LOGGER.error("Fail during getting MS token", e);
+        break;
+      }
+
+      String skypeToken = object.getString("skypetoken");
+      String skypeId = object.getString("skypeid");
+      if (skypeId == null || skypeToken == null) {
+        LOGGER.error("Skype token or skype id is null");
+        break;
+      }
+      skype = new MSFTSkypeClient.Builder(skypeToken, skypeId)
+              .withAllResources().build();
+    }
+    return skype;
   }
 
   private static void checkLoginPassword() {
