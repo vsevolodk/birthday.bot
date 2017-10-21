@@ -15,6 +15,9 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
+import static org.joda.time.DateTimeConstants.SATURDAY;
+import static org.joda.time.DateTimeConstants.SUNDAY;
+
 public class PingChatJob implements Job {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PingChatJob.class);
@@ -38,11 +41,20 @@ public class PingChatJob implements Job {
             final Days days = Days.daysBetween(new DateTime().toLocalDate(), nextBDay.toLocalDate());
 
             try {
-                chat.sendMessage(Message.fromHtml(getMessage(days.getDays())));
+                final int daysCount = days.getDays();
+                chat.sendMessage(Message.fromHtml(getMessage(daysCount)));
+                if (daysCount <= 0 && isWorkingDay(DateTime.now())) {
+                    chatRepository.deleteChat(chat.getIdentity());
+                }
             } catch (ConnectionException e) {
                 LOGGER.error("Ping chat " + chat.getIdentity() + " failed", e);
             }
         }
+    }
+
+    private boolean isWorkingDay(DateTime dateTime) {
+        final int dayOfWeek = dateTime.getDayOfWeek();
+        return dayOfWeek != SATURDAY && dayOfWeek != SUNDAY;
     }
 
     private String getMessage(int days) {

@@ -92,7 +92,7 @@ public class ChatRepository {
         deleteChatAsXML(chat.getState());
         try {
             chat.sendMessage(Message.fromHtml("<b>Here my work is finished<b>"));
-            chat.leave();
+            chat.leave(); // todo: leaving does not work
         } catch (Exception e) {
             LOGGER.error("Leaving of chat " + identity + "is failed", e);
         }
