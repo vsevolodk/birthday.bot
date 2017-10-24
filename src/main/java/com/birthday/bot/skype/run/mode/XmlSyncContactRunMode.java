@@ -4,6 +4,7 @@ import com.birthday.bot.db.NitriteHolder;
 import com.birthday.bot.skype.contact.Contact;
 import com.birthday.bot.skype.settings.BirthdayBot;
 import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
+import org.dizitart.no2.WriteResult;
 import org.dizitart.no2.objects.ObjectRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
@@ -37,6 +38,7 @@ public class XmlSyncContactRunMode extends AbstractRunMode {
       contact.setAdmin(xmlContact.isIsAdmin());
       repository.update(contact, true);
     }
+    NitriteHolder.getInstance().commit();
     LOGGER.info("Finish migration contact from xml to nitrite");
   }
 
