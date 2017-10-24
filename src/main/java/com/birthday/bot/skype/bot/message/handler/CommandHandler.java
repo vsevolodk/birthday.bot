@@ -34,6 +34,16 @@ public abstract class CommandHandler {
         return parameters;
     }
 
+    protected String getParametersAsString(final MessageReceivedEvent messageReceivedEvent) {
+        final List<String> parameters = getParameters(messageReceivedEvent);
+        StringBuilder stringBuilder = new StringBuilder();
+        for (String parameter : parameters) {
+            stringBuilder.append(parameter).append(" ");
+        }
+        stringBuilder.delete(stringBuilder.length() - 1, stringBuilder.length());
+        return stringBuilder.toString();
+    }
+
     protected String getSkypeLogin(MessageReceivedEvent messageReceivedEvent) {
         final String identity = messageReceivedEvent.getMessage().getChat().getIdentity();
         final ChatForBDay groupChat = ChatRepository.getInstance().getGroupChat(identity);

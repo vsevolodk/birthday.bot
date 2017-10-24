@@ -23,8 +23,8 @@ public class AddContactHandler extends AbstractAdminHandler {
   @Override
   public void handle(MessageReceivedEvent messageReceivedEvent) {
     try {
-      final List<String> parameters = getParameters(messageReceivedEvent);
-      final String[] params = parameters.get(0).split(";");
+      final String parameters = getParametersAsString(messageReceivedEvent);
+      final String[] params = parameters.split(";");
       final String skypeLogin = params[0];
       final String bDay = params[1];
       final String topicName = params[2];
@@ -40,7 +40,8 @@ public class AddContactHandler extends AbstractAdminHandler {
               NitriteHolder.getInstance().getRepository(Contact.class);
 
       contactObjectRepository.insert(newContact);
-      Reloader.reload();
+      NitriteHolder.getInstance().commit();
+
       final boolean result = ChatRepository.getInstance().addNewContactForAllChats(skypeLogin);
       if (!result) {
         response = Message.fromHtml("I cannot add contact to storage");
@@ -57,6 +58,7 @@ public class AddContactHandler extends AbstractAdminHandler {
 
     response = Message.fromHtml("I added contact {} to storage");
     super.handle(messageReceivedEvent);
+    Reloader.reload();
   }
 
   private Date getDate(String bDay) {

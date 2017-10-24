@@ -30,7 +30,8 @@ public class RemoveContactHandler extends AbstractAdminHandler {
               NitriteHolder.getInstance().getRepository(Contact.class);
 
       contactObjectRepository.remove(eq("skype", contactSkype));
-      Reloader.reload();
+      NitriteHolder.getInstance().commit();
+
       final boolean result = ChatRepository.getInstance().removeContactFromAllChatsAndHisChat(contactSkype);
 
       if (!result) {
@@ -40,14 +41,15 @@ public class RemoveContactHandler extends AbstractAdminHandler {
       }
 
     } catch (Exception e) {
-      LOGGER.error("Error during adding new contact", e);
-      response = Message.fromHtml("I cannot add contact to storage");
+      LOGGER.error("Error during removing contact", e);
+      response = Message.fromHtml("I cannot remove contact from storage");
       super.handle(messageReceivedEvent);
       return;
     }
 
-    response = Message.fromHtml("I added contact {} to storage");
+    response = Message.fromHtml("I removed contact from storage");
     super.handle(messageReceivedEvent);
+    Reloader.reload();
   }
 
   @Override
