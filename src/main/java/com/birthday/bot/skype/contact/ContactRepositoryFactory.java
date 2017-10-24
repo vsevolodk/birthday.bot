@@ -46,9 +46,9 @@ public class ContactRepositoryFactory {
             final ContactWithBDay contactWithBDay = new ContactWithBDay(skypeContact, bDay, topicName, isAdmin);
 
             result.put(contactWithBDay.getUsername(), contactWithBDay);
-
-            LOGGER.debug("Contact is loaded: {}", contact);
         }
+
+        LOGGER.info("Next contacts are loaded {}", result);
 
         return result;
     }
