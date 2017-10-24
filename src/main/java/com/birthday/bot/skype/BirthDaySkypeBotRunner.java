@@ -11,6 +11,6 @@ public class BirthDaySkypeBotRunner {
 
     public static void main(String[] args) {
         RunMode runMode = RunModeResolver.resolveRunMode(args);
-        runMode.run();
+        runMode.run(args);
     }
 }

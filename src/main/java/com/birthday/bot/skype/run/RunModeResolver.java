@@ -1,9 +1,6 @@
 package com.birthday.bot.skype.run;
 
-import com.birthday.bot.skype.run.mode.ContactsAddingRunMode;
-import com.birthday.bot.skype.run.mode.DefaultRunMode;
-import com.birthday.bot.skype.run.mode.RunMode;
-import com.birthday.bot.skype.run.mode.SyncChatRunMode;
+import com.birthday.bot.skype.run.mode.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,12 +13,14 @@ public class RunModeResolver {
 
     private static final String CONTACTS_ADDING = "contactsAdding";
     private static final String SYNC_CHATS = "syncChats";
+    private static final String XML_SYNC_CONTACTS = "xmlSync";
     private static final String DEFAULT_MODE = "default";
 
     private static Map<String, RunMode> modes = new HashMap<String, RunMode>(){{
         put(CONTACTS_ADDING, new ContactsAddingRunMode());
         put(SYNC_CHATS, new SyncChatRunMode());
         put(DEFAULT_MODE, new DefaultRunMode());
+        put(XML_SYNC_CONTACTS, new XmlSyncContactRunMode());
     }};
 
     public static RunMode resolveRunMode(final String[] args) {

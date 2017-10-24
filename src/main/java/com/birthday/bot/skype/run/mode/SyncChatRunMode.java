@@ -19,7 +19,7 @@ import java.util.Set;
 public class SyncChatRunMode extends AbstractRunMode {
 
     @Override
-    public void run() {
+    public void run(String[] args) {
         initSkype();
         final Skype skype = SkypeHolder.getSkype();
         final Console console = System.console();

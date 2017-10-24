@@ -11,7 +11,7 @@ import java.util.Collection;
 public class ContactsAddingRunMode extends AbstractRunMode {
 
     @Override
-    public void run() {
+    public void run(String[] args) {
         initSkype();
 
         ContactRepository contactRepository = ContactRepository.getInstance();
