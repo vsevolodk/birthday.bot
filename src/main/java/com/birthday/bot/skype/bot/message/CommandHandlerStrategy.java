@@ -1,9 +1,6 @@
 package com.birthday.bot.skype.bot.message;
 
-import com.birthday.bot.skype.bot.message.handler.impl.group.AddedOption;
-import com.birthday.bot.skype.bot.message.handler.impl.group.DeleteChat;
-import com.birthday.bot.skype.bot.message.handler.impl.group.HelpHandler;
-import com.birthday.bot.skype.bot.message.handler.impl.group.ShowOptions;
+import com.birthday.bot.skype.bot.message.handler.impl.group.*;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.birthday.bot.skype.bot.message.handler.CommandHandler;
 
@@ -23,6 +20,8 @@ public class CommandHandlerStrategy {
         put(OPTION, new AddedOption());
         put(DONE, new DeleteChat());
         put(SHOW_OPTIONS, new ShowOptions());
+        put(ADD_HISTORY_GIFT, new AddHistoryGiftForContactHandler());
+        put(SHOW_HISTORY_GIFT, new ShowHistoryGiftHandler());
     }};
 
     public static void handle(final MessageReceivedEvent event) {

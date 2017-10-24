@@ -1,5 +1,6 @@
 package com.birthday.bot.skype.chat;
 
+import com.birthday.bot.db.NitriteHolder;
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.chat.Chat;
 import com.samczsun.skype4j.chat.GroupChat;
@@ -10,6 +11,8 @@ import com.birthday.bot.skype.holder.SkypeHolder;
 import com.birthday.bot.tools.serialization.SerializationHelper;
 import com.birthday.bot.tools.serialization.XStreamSerializationHelper;
 import org.apache.commons.io.FileUtils;
+import org.dizitart.no2.Nitrite;
+import org.dizitart.no2.objects.ObjectRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,26 +43,19 @@ public class ChatRepositoryFactory {
         }
     }
 
-    private static final SerializationHelper<ChatForBDayState> SERIALIZATION_HELPER = new XStreamSerializationHelper<ChatForBDayState>();
-
     private static Map<String, ChatForBDay> loadChats(final Skype skype) throws ConnectionException, ChatNotFoundException, IOException {
-        File file = new File(USER_DIR + "/chats");
-        if (!file.exists()) {
-            file.mkdir();
-        }
-        Iterator iterator = FileUtils.iterateFiles(file, new String[]{"xml"}, false);
+        final Nitrite nitrite = NitriteHolder.getInstance();
+        final ObjectRepository<ChatForBDayState> chatRepository = nitrite.getRepository(ChatForBDayState.class);
 
-        int fileCount = 0;
+        int documentsCount = 0;
 
-        final Map<String, ChatForBDay> result = new HashMap<String, ChatForBDay>();
-        while (iterator.hasNext()) {
-            fileCount++;
-            final File childFile = (File) iterator.next();
-            final String xml = readFile(childFile.getAbsolutePath());
-            final ChatForBDayState chatForBDayState = SERIALIZATION_HELPER.fromXML(xml);
+        final Map<String, ChatForBDay> result = new HashMap<>();
+        for (ChatForBDayState chatState : chatRepository.find()) {
 
-            String chatIdentity = chatForBDayState.getIdentity();
-            String human = chatForBDayState.getbDayHuman();
+            documentsCount++;
+
+            String chatIdentity = chatState.getIdentity();
+            String human = chatState.getbDayHuman();
 
             final Chat loadChat = getWithPauseIfNeededChat(skype, chatIdentity);
             if (loadChat != null) {
@@ -72,7 +68,7 @@ public class ChatRepositoryFactory {
                 LOGGER.error("Chat {} for {} can not be loaded", chatIdentity, human);
             }
         }
-        if (fileCount != result.size()) {
+        if (documentsCount != result.size()) {
             LOGGER.error("Loaded chats size doesn't equal to stored chat size");
         }
         return result;

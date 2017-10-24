@@ -11,9 +11,9 @@ import com.samczsun.skype4j.participants.Participant;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public abstract class AbstractAdminCommand extends CommandHandler {
+public abstract class AbstractAdminHandler extends CommandHandler {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdminCommand.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(AbstractAdminHandler.class);
 
   private static final String doNotKnowYouMessage = " sorry, I do not know you.";
   private static final String youAreNotAdminMessage = " sorry, you are not admin.";
@@ -27,7 +27,7 @@ public abstract class AbstractAdminCommand extends CommandHandler {
       ContactWithBDay contactWithBDay = ContactRepository.getInstance().getContactWithBDay(username);
       if (contactWithBDay != null) {
         if (contactWithBDay.isAdmin()) {
-          Message message = getMessage();
+          Message message = getMessage(messageReceivedEvent);
           if (message != null) {
             chat.sendMessage(message);
           } else {
@@ -51,5 +51,5 @@ public abstract class AbstractAdminCommand extends CommandHandler {
     return id.substring(2);
   }
 
-  protected abstract Message getMessage();
+  protected abstract Message getMessage(MessageReceivedEvent messageReceivedEvent);
 }

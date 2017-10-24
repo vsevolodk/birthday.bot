@@ -7,7 +7,7 @@ import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class PingHandler extends AbstractAdminCommand {
+public class PingHandler extends AbstractAdminHandler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(PingHandler.class);
 
@@ -20,13 +20,15 @@ public class PingHandler extends AbstractAdminCommand {
     } catch (JobExecutionException e) {
       LOGGER.error(this.getClass().getName() + " failed", e);
       response = Message.fromHtml("I could not ping due to internal error. See logs");
+      super.handle(messageReceivedEvent);
+      return;
     }
     response = Message.fromHtml("I pinged all current chats");
     super.handle(messageReceivedEvent);
   }
 
   @Override
-  protected Message getMessage() {
+  protected Message getMessage(MessageReceivedEvent messageReceivedEvent) {
     return response;
   }
 }

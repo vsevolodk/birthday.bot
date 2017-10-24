@@ -1,18 +1,17 @@
 package com.birthday.bot.skype.contact;
 
-import com.birthday.bot.skype.settings.Contact;
-import com.birthday.bot.skype.settings.loader.BirthdayBotSettings;
+import com.birthday.bot.db.NitriteHolder;
 import com.samczsun.skype4j.Skype;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.birthday.bot.skype.holder.SkypeHolder;
-import com.birthday.bot.skype.settings.Contacts;
+import org.dizitart.no2.Nitrite;
+import org.dizitart.no2.objects.ObjectRepository;
 import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,32 +31,29 @@ public class ContactRepositoryFactory {
     }
 
     private static Map<String, ContactWithBDay> loadContacts(final Skype skype) throws ConnectionException {
-        final Contacts contacts = BirthdayBotSettings.getInstance().getConfiguration().getContacts();
+        final Nitrite nitrite = NitriteHolder.getInstance();
+        final ObjectRepository<Contact> contactRepository = nitrite.getRepository(Contact.class);
 
-        final List<Contact> contactList = contacts.getContact();
-
-        final Map<String, ContactWithBDay> result = new HashMap<String, ContactWithBDay>(contactList.size());
-        for (final Contact contact : contactList) {
+        final Map<String, ContactWithBDay> result = new HashMap<>();
+        for (Contact contact : contactRepository.find()) {
             final String skypeId = contact.getSkype();
-            final DateTime bDay = getDate(contact.getBDay());
+            final DateTime bDay = getDate(contact.getbDay());
             final String topicName = contact.getTopicName();
-            final boolean isAdmin = contact.isIsAdmin();
+            final boolean isAdmin = contact.isAdmin();
 
             com.samczsun.skype4j.participants.info.Contact skypeContact = skype.getOrLoadContact(skypeId);
 
             final ContactWithBDay contactWithBDay = new ContactWithBDay(skypeContact, bDay, topicName, isAdmin);
 
             result.put(contactWithBDay.getUsername(), contactWithBDay);
-        }
 
-        if (result.size() != contactList.size()) {
-            LOGGER.error("Loaded contacts size doesn't equal to settings contact size");
+            LOGGER.debug("Contact is loaded: {}", contact);
         }
 
         return result;
     }
 
-    private static DateTime getDate(XMLGregorianCalendar bDay) {
-        return new DateTime(bDay.getYear(), bDay.getMonth(), bDay.getDay(), 0, 0);
+    private static DateTime getDate(Date bDay) {
+        return new DateTime(bDay);
     }
 }

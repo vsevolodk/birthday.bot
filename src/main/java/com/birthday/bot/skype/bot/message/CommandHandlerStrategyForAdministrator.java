@@ -1,20 +1,14 @@
 package com.birthday.bot.skype.bot.message;
 
 import com.birthday.bot.skype.bot.message.handler.CommandHandler;
-import com.birthday.bot.skype.bot.message.handler.impl.admin.CreateChatsHandler;
-import com.birthday.bot.skype.bot.message.handler.impl.admin.HelpHandler;
-import com.birthday.bot.skype.bot.message.handler.impl.admin.PingHandler;
-import com.birthday.bot.skype.bot.message.handler.impl.admin.StatusHandler;
+import com.birthday.bot.skype.bot.message.handler.impl.admin.*;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-import static com.birthday.bot.skype.bot.message.CommandsConstants.HELP;
-import static com.birthday.bot.skype.bot.message.CommandsConstants.STATUS;
-import static com.birthday.bot.skype.bot.message.CommandsConstants.PING;
-import static com.birthday.bot.skype.bot.message.CommandsConstants.CREATE;
+import static com.birthday.bot.skype.bot.message.CommandsConstants.*;
 
 public class CommandHandlerStrategyForAdministrator {
 
@@ -22,7 +16,12 @@ public class CommandHandlerStrategyForAdministrator {
     put(HELP, new HelpHandler());
     put(STATUS, new StatusHandler());
     put(PING, new PingHandler());
-    put(CREATE, new CreateChatsHandler());
+    put(CREATE_CHAT, new CreateChatsHandler());
+    put(ADD_CONTACT, new AddContactHandler());
+    put(RM_CONTACT, new RemoveContactHandler());
+    put(SHOW_CONTACTS, new ShowContactHandler());
+    put(SHOW_CHATS, new ShowChatHandler());
+    put(ADD_HISTORY_GIFT, new AddHistoryGiftForContactHandler());
   }};
 
   public static void handle(final MessageReceivedEvent event) {

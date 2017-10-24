@@ -1,6 +1,7 @@
 package com.birthday.bot.skype.bot.message.handler.impl.admin;
 
 import com.birthday.bot.skype.holder.SchedulerHolder;
+import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.formatting.Message;
 import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
@@ -13,12 +14,12 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 import java.util.Set;
 
-public class StatusHandler extends AbstractAdminCommand {
+public class StatusHandler extends AbstractAdminHandler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(StatusHandler.class);
 
   @Override
-  protected Message getMessage() {
+  protected Message getMessage(MessageReceivedEvent messageReceivedEvent) {
     try {
       StringBuilder mes = new StringBuilder();
       mes.append("Status response:\n");
