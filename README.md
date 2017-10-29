@@ -1,12 +1,18 @@
 # birthday.bot
-skype bot for birthday skype chats.
+Skype bot for birthday skype chats.
+
+Main features:
+ * auto birthday chats creating for your team
+ * availability to save and to show current gift options
+ * storing history of gifts year by year (P.S. you should store yourself via command)
+ * daily reminder for all chats
 
 ### Comands
-*\boption* [super present] - this command says to bot add gift option.
+#### Group commands
+<tbd>
+#### Admin commands
+<tbd>
 
-*\bshow* - this command says to bot show all current gift options.
-
-*\bdone* - this command says to bot that current birthday is finished.
 
 ## Relations
 This bot based on [Skype4j](https://github.com/samczsun/Skype4J)
