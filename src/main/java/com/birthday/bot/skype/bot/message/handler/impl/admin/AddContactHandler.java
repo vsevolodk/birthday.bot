@@ -4,6 +4,9 @@ import com.birthday.bot.db.NitriteHolder;
 import com.birthday.bot.skype.Reloader;
 import com.birthday.bot.skype.chat.ChatRepository;
 import com.birthday.bot.skype.contact.Contact;
+import com.birthday.bot.skype.contact.ContactRepository;
+import com.birthday.bot.skype.contact.ContactRepositoryFactory;
+import com.birthday.bot.skype.contact.ContactWithBDay;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.formatting.Message;
 import org.dizitart.no2.objects.ObjectRepository;
@@ -12,7 +15,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Date;
-import java.util.List;
 
 public class AddContactHandler extends AbstractAdminHandler {
 
@@ -36,15 +38,11 @@ public class AddContactHandler extends AbstractAdminHandler {
       newContact.setTopicName(topicName);
       newContact.setAdmin(Boolean.valueOf(isAdmin));
 
-      final ObjectRepository<Contact> contactObjectRepository =
-              NitriteHolder.getInstance().getRepository(Contact.class);
-
-      contactObjectRepository.insert(newContact);
-      NitriteHolder.getInstance().commit();
+      ContactRepository.getInstance().addUser(newContact);
 
       final boolean result = ChatRepository.getInstance().addNewContactForAllChats(skypeLogin);
       if (!result) {
-        response = Message.fromHtml("I cannot add contact to storage");
+        response = Message.fromHtml("I cannot add contact for all chats to storage");
         super.handle(messageReceivedEvent);
         return;
       }
@@ -56,7 +54,7 @@ public class AddContactHandler extends AbstractAdminHandler {
       return;
     }
 
-    response = Message.fromHtml("I added contact {} to storage");
+    response = Message.fromHtml("I added contact to storage");
     super.handle(messageReceivedEvent);
     Reloader.reload();
   }

@@ -35,6 +35,7 @@ public class AddHistoryGiftForContactHandler extends AbstractAdminHandler {
       contact.addHistoryGift(year, gift);
 
       contactObjectRepository.update(contact);
+      NitriteHolder.getInstance().commit();
 
     } catch (Exception e) {
       LOGGER.error("Error during adding history gift", e);

@@ -4,6 +4,7 @@ import com.birthday.bot.db.NitriteHolder;
 import com.birthday.bot.skype.Reloader;
 import com.birthday.bot.skype.chat.ChatRepository;
 import com.birthday.bot.skype.contact.Contact;
+import com.birthday.bot.skype.contact.ContactRepository;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.formatting.Message;
 import org.dizitart.no2.objects.ObjectRepository;
@@ -26,16 +27,11 @@ public class RemoveContactHandler extends AbstractAdminHandler {
       final List<String> parameters = getParameters(messageReceivedEvent);
       final String contactSkype = parameters.get(0);
 
-      final ObjectRepository<Contact> contactObjectRepository =
-              NitriteHolder.getInstance().getRepository(Contact.class);
-
-      contactObjectRepository.remove(eq("skype", contactSkype));
-      NitriteHolder.getInstance().commit();
-
       final boolean result = ChatRepository.getInstance().removeContactFromAllChatsAndHisChat(contactSkype);
+      ContactRepository.getInstance().removeContact(contactSkype);
 
       if (!result) {
-        response = Message.fromHtml("I cannot add contact to storage");
+        response = Message.fromHtml("I cannot remove contact from all chats from storage");
         super.handle(messageReceivedEvent);
         return;
       }

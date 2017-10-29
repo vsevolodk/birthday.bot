@@ -58,6 +58,7 @@ public class ChatRepository {
       final ObjectRepository<ChatForBDayState> repository =
               NitriteHolder.getInstance().getRepository(ChatForBDayState.class);
       repository.update(state);
+      NitriteHolder.getInstance().commit();
     }
 
     public List<ChatForBDay> getChats() {
@@ -73,6 +74,7 @@ public class ChatRepository {
       final ObjectRepository<ChatForBDayState> repository =
               NitriteHolder.getInstance().getRepository(ChatForBDayState.class);
       repository.insert(state);
+      NitriteHolder.getInstance().commit();
       chats.put(chat.getIdentity(), chat);
       LOGGER.info(
               "Chat is added to repository: {} for {}",
@@ -86,6 +88,7 @@ public class ChatRepository {
       final ObjectRepository<ChatForBDayState> repository =
               NitriteHolder.getInstance().getRepository(ChatForBDayState.class);
       repository.remove(chat.getState());
+      NitriteHolder.getInstance().commit();
       try {
         chat.sendMessage(Message.fromHtml("<b>Here my work is finished<b>"));
         chat.leave(); // todo: leaving does not work
@@ -148,7 +151,7 @@ public class ChatRepository {
         }
 
         LOGGER.info(
-                "Remove contact {} for all current chats and his chat",
+                "Contact {} is removed for all current chats and his chat",
                 contactSkype
         );
         return true;

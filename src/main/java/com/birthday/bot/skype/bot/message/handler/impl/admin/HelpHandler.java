@@ -14,7 +14,7 @@ public class HelpHandler extends AbstractAdminHandler {
           "0. \\bHelp - command for list of available command display \n"
             + "1. \\bStatus - command for common metrics display \n"
             + "2. \\bAddContact skype;yyyy-mm-dd;topic;[true|false] - command for adding new contact \n"
-            + "3. \\bRemoveContact skype - command for removing exist contact \n"
+            + "3. \\bRmContact skype - command for removing exist contact \n"
             + "4. \\bPing - command for ping all exist chats \n"
             + "5. \\bCreate - command for manual create comming soon chats \n"
             + "6. \\bShowContacts - command for display current contact list \n"

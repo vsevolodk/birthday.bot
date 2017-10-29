@@ -2,6 +2,7 @@ package com.birthday.bot.skype.contact;
 
 import com.birthday.bot.db.NitriteHolder;
 import com.samczsun.skype4j.Skype;
+import com.samczsun.skype4j.exceptions.ChatNotFoundException;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.birthday.bot.skype.holder.SkypeHolder;
 import org.dizitart.no2.Nitrite;
@@ -36,21 +37,38 @@ public class ContactRepositoryFactory {
 
         final Map<String, ContactWithBDay> result = new HashMap<>();
         for (Contact contact : contactRepository.find()) {
-            final String skypeId = contact.getSkype();
-            final DateTime bDay = getDate(contact.getbDay());
-            final String topicName = contact.getTopicName();
-            final boolean isAdmin = contact.isAdmin();
 
-            com.samczsun.skype4j.participants.info.Contact skypeContact = skype.getOrLoadContact(skypeId);
+            final ContactWithBDay contactWithBDay = loadContact(contact);
 
-            final ContactWithBDay contactWithBDay = new ContactWithBDay(skypeContact, bDay, topicName, isAdmin);
-
-            result.put(contactWithBDay.getUsername(), contactWithBDay);
+            if (contactWithBDay != null) {
+                result.put(contactWithBDay.getUsername(), contactWithBDay);
+            }
         }
 
         LOGGER.info("Next contacts are loaded {}", result);
 
         return result;
+    }
+
+    public static ContactWithBDay loadContact(Contact contact) {
+        try {
+            final String skypeId = contact.getSkype();
+            final DateTime bDay = getDate(contact.getbDay());
+            final String topicName = contact.getTopicName();
+            final boolean isAdmin = contact.isAdmin();
+
+            final Skype skype = SkypeHolder.getSkype();
+
+            com.samczsun.skype4j.participants.info.Contact skypeContact =
+                    skype.getOrLoadContact(skypeId);
+
+            final ContactWithBDay contactWithBDay =
+                    new ContactWithBDay(skypeContact, contact, bDay, topicName, isAdmin);
+            return contactWithBDay;
+        } catch (ConnectionException e) {
+            LOGGER.error("Error during loading of contact " + contact.getSkype(), e);
+            return null;
+        }
     }
 
     private static DateTime getDate(Date bDay) {

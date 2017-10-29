@@ -6,10 +6,7 @@ import org.dizitart.no2.objects.Index;
 import org.dizitart.no2.objects.Indices;
 
 import java.io.Serializable;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @Indices({
         @Index(value = "skype", type = IndexType.Unique)
@@ -86,9 +83,18 @@ public class Contact implements Serializable {
   public String toString() {
     return "Contact{" +
             "skype='" + skype + '\'' +
-            ", bDay=" + bDay +
+            ", bDay=" + formatDate(bDay) +
             ", topicName='" + topicName + '\'' +
             ", isAdmin=" + isAdmin +
             '}';
+  }
+
+  private String formatDate(Date date) {
+    final Calendar instance = Calendar.getInstance();
+    instance.setTime(date);
+    final int day = instance.get(Calendar.DAY_OF_MONTH);
+    final int month = instance.get(Calendar.MONTH);
+    final int year = instance.get(Calendar.YEAR);
+    return day + "." + month + "." + year;
   }
 }

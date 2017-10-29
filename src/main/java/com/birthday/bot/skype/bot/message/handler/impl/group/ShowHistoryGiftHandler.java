@@ -3,6 +3,7 @@ package com.birthday.bot.skype.bot.message.handler.impl.group;
 import com.birthday.bot.db.NitriteHolder;
 import com.birthday.bot.skype.bot.message.handler.CommandHandler;
 import com.birthday.bot.skype.contact.Contact;
+import com.birthday.bot.skype.contact.ContactRepository;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.formatting.Message;
 import org.dizitart.no2.objects.ObjectRepository;
@@ -21,23 +22,11 @@ public class ShowHistoryGiftHandler extends CommandHandler {
 
   @Override
   public void handle(MessageReceivedEvent messageReceivedEvent) {
-    final ObjectRepository<Contact> repository =
-            NitriteHolder.getInstance().getRepository(Contact.class);
-    final Contact contact =
-            repository.find(eq("skype", getSkypeLogin(messageReceivedEvent))).iterator().next();
 
-    StringBuilder stringBuilder = new StringBuilder();
-    stringBuilder.append("Gift history: \n");
-    stringBuilder.append("year gift");
-    for (Map.Entry<Integer, String> entry : contact.getHistoryMap().entrySet()) {
-      final Integer year = entry.getKey();
-      final String gift = entry.getValue();
-      stringBuilder
-              .append(year).append(" ").append(gift)
-              .append("\n");
-    }
-
-    response = Message.fromHtml(stringBuilder.toString());
+    response = Message.fromHtml(
+            ContactRepository.getInstance()
+                    .getHistoryGiftOfContactAsString(getSkypeLogin(messageReceivedEvent))
+    );
     sendResponse(messageReceivedEvent, response);
   }
 }

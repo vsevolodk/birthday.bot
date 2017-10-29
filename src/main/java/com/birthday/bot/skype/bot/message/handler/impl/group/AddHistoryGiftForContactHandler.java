@@ -5,6 +5,7 @@ import com.birthday.bot.skype.bot.message.handler.CommandHandler;
 import com.birthday.bot.skype.chat.ChatForBDay;
 import com.birthday.bot.skype.chat.ChatRepository;
 import com.birthday.bot.skype.contact.Contact;
+import com.birthday.bot.skype.contact.ContactRepository;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.samczsun.skype4j.formatting.Message;
@@ -31,14 +32,7 @@ public class AddHistoryGiftForContactHandler extends CommandHandler {
       final Integer year = Integer.valueOf(params[1]);
       final String gift = params[2];
 
-      final ObjectRepository<Contact> contactObjectRepository =
-              NitriteHolder.getInstance().getRepository(Contact.class);
-
-      final Contact contact =
-              contactObjectRepository.find(eq("skype", skypeLogin)).iterator().next();
-      contact.addHistoryGift(year, gift);
-
-      contactObjectRepository.update(contact);
+      ContactRepository.getInstance().addHistoryGiftForContact(skypeLogin, year, gift);
 
     } catch (Exception e) {
       LOGGER.error("Error during adding history gift", e);
