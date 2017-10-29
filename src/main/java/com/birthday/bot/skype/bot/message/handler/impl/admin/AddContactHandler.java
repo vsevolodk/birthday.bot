@@ -56,7 +56,6 @@ public class AddContactHandler extends AbstractAdminHandler {
 
     response = Message.fromHtml("I added contact to storage");
     super.handle(messageReceivedEvent);
-    Reloader.reload();
   }
 
   private Date getDate(String bDay) {

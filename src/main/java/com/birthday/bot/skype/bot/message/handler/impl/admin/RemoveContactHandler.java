@@ -45,7 +45,6 @@ public class RemoveContactHandler extends AbstractAdminHandler {
 
     response = Message.fromHtml("I removed contact from storage");
     super.handle(messageReceivedEvent);
-    Reloader.reload();
   }
 
   @Override
