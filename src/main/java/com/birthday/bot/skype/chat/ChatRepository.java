@@ -157,7 +157,7 @@ public class ChatRepository {
         return true;
       }
     } catch (ConnectionException e) {
-      LOGGER.error("Error during adding new contact " + contactSkype, e);
+      LOGGER.error("Error during removing contact " + contactSkype, e);
     }
     return false;
   }
