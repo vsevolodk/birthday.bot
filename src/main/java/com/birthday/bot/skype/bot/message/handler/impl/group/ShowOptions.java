@@ -4,6 +4,8 @@ import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.birthday.bot.skype.bot.message.handler.CommandHandler;
 import com.birthday.bot.skype.chat.ChatForBDay;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -12,12 +14,22 @@ import java.util.List;
  */
 public class ShowOptions extends CommandHandler {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(ShowOptions.class);
+
     @Override
     public void handle(MessageReceivedEvent messageReceivedEvent) {
         final ChatForBDay chatForBDay = getChatForBDay(messageReceivedEvent);
         chatForBDay.getOptions();
 
         final List<String> options = chatForBDay.getOptions();
+        if (options.isEmpty()) {
+            try {
+                chatForBDay.sendMessage("You don't have options for current chat");
+            } catch (ConnectionException e) {
+                LOGGER.error("Errod during sending response for empty option list", e);
+            }
+        }
+
         final StringBuilder targetMes = new StringBuilder();
         for (int i = 0; i < options.size(); i++) {
             targetMes
@@ -30,7 +42,7 @@ public class ShowOptions extends CommandHandler {
         try {
             chatForBDay.sendMessage(targetMes.toString());
         } catch (ConnectionException e) {
-            e.printStackTrace();
+            LOGGER.error("Errod during sending response for option list", e);
         }
     }
 }
