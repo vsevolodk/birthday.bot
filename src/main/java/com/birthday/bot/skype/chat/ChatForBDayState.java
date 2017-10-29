@@ -24,7 +24,6 @@ public class ChatForBDayState implements Serializable {
     private String identity;
     private String bDayHuman;
     private List<String> options;
-    private String fileName;
 
     public ChatForBDayState(final String identity, final String bDayHuman) {
         this.identity = identity;
@@ -54,14 +53,6 @@ public class ChatForBDayState implements Serializable {
         return identity;
     }
 
-    public String getFileName() {
-        return fileName;
-    }
-
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -83,7 +74,6 @@ public class ChatForBDayState implements Serializable {
                 "identity='" + identity + '\'' +
                 ", bDayHuman='" + bDayHuman + '\'' +
                 ", options=" + options +
-                ", fileName='" + fileName + '\'' +
                 '}';
     }
 }
