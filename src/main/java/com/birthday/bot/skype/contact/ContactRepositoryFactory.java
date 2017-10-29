@@ -2,7 +2,6 @@ package com.birthday.bot.skype.contact;
 
 import com.birthday.bot.db.NitriteHolder;
 import com.samczsun.skype4j.Skype;
-import com.samczsun.skype4j.exceptions.ChatNotFoundException;
 import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.birthday.bot.skype.holder.SkypeHolder;
 import org.dizitart.no2.Nitrite;
@@ -25,13 +24,13 @@ public class ContactRepositoryFactory {
 
     public static ContactRepository create() {
         try {
-            return new ContactRepository(loadContacts(SkypeHolder.getSkype()));
+            return new ContactRepository(loadContacts());
         } catch (ConnectionException e) {
             throw new RuntimeException(e);
         }
     }
 
-    private static Map<String, ContactWithBDay> loadContacts(final Skype skype) throws ConnectionException {
+    private static Map<String, ContactWithBDay> loadContacts() throws ConnectionException {
         final Nitrite nitrite = NitriteHolder.getInstance();
         final ObjectRepository<Contact> contactRepository = nitrite.getRepository(Contact.class);
 
@@ -63,7 +62,7 @@ public class ContactRepositoryFactory {
                     skype.getOrLoadContact(skypeId);
 
             final ContactWithBDay contactWithBDay =
-                    new ContactWithBDay(skypeContact, contact, bDay, topicName, isAdmin);
+                    new ContactWithBDay(skypeContact, bDay, topicName, isAdmin);
             return contactWithBDay;
         } catch (ConnectionException e) {
             LOGGER.error("Error during loading of contact " + contact.getSkype(), e);
