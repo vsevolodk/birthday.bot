@@ -25,11 +25,6 @@ public class HelpHandler extends CommandHandler {
 
   @Override
   public void handle(MessageReceivedEvent messageReceivedEvent) {
-    final ChatForBDay chatForBDay = getChatForBDay(messageReceivedEvent);
-    try {
-      chatForBDay.sendMessage(helpMessage);
-    } catch (ConnectionException e) {
-      LOGGER.error("Error during group help command", e);
-    }
+    sendResponse(messageReceivedEvent, helpMessage);
   }
 }

@@ -18,12 +18,10 @@ public class ShowHistoryGiftHandler extends CommandHandler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ShowHistoryGiftHandler.class);
 
-  private Message response;
-
   @Override
   public void handle(MessageReceivedEvent messageReceivedEvent) {
 
-    response = Message.fromHtml(
+    Message response = Message.fromHtml(
             ContactRepository.getInstance()
                     .getHistoryGiftOfContactAsString(getSkypeLogin(messageReceivedEvent))
     );

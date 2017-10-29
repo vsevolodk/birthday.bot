@@ -11,6 +11,9 @@ import com.samczsun.skype4j.formatting.Message;
 
 public class PrivateConversationForAdministratorListener implements Listener {
 
+  private static final CommandHandlerStrategyForAdministrator HANDLER_STRATEGY =
+          new CommandHandlerStrategyForAdministrator();
+
   @EventHandler
   public void onMessage(MessageReceivedEvent e) {
     final Chat chat = e.getMessage().getChat();
@@ -21,7 +24,7 @@ public class PrivateConversationForAdministratorListener implements Listener {
       String plaintext = content.asPlaintext();
 
       if (plaintext.startsWith("\\")) {
-        CommandHandlerStrategyForAdministrator.handle(e);
+        HANDLER_STRATEGY.handle(e);
       }
     }
   }

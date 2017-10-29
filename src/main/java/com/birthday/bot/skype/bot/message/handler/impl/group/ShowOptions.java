@@ -25,6 +25,7 @@ public class ShowOptions extends CommandHandler {
         if (options.isEmpty()) {
             try {
                 chatForBDay.sendMessage("You don't have options for current chat");
+                return;
             } catch (ConnectionException e) {
                 LOGGER.error("Errod during sending response for empty option list", e);
             }

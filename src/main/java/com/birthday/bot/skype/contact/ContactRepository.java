@@ -111,7 +111,7 @@ public class ContactRepository {
             stringBuilder.append("Gift history is empty");
         } else {
             stringBuilder.append("Gift history: \n");
-            stringBuilder.append("year gift");
+            stringBuilder.append("year gift \n");
             for (Map.Entry<Integer, String> entry : historyMap.entrySet()) {
                 final Integer year = entry.getKey();
                 final String gift = entry.getValue();

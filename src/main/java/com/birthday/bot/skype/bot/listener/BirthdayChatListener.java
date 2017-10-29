@@ -9,21 +9,24 @@ import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
 import com.samczsun.skype4j.formatting.Message;
 import com.birthday.bot.skype.bot.message.CommandHandlerStrategy;
 
-public class BirthdayChatListener implements Listener{
+public class BirthdayChatListener implements Listener {
 
-    @EventHandler
-    public void onMessage(MessageReceivedEvent e) {
+  private static final CommandHandlerStrategy HANDLER_STRATEGY =
+          new CommandHandlerStrategy();
 
-        Chat chat = e.getChat();
-        if (chat instanceof GroupChat) {
+  @EventHandler
+  public void onMessage(MessageReceivedEvent e) {
 
-            ReceivedMessage message = e.getMessage();
-            Message content = message.getContent();
-            String plaintext = content.asPlaintext();
+    Chat chat = e.getChat();
+    if (chat instanceof GroupChat) {
 
-            if (plaintext.startsWith("\\")) {
-                CommandHandlerStrategy.handle(e);
-            }
-        }
+      ReceivedMessage message = e.getMessage();
+      Message content = message.getContent();
+      String plaintext = content.asPlaintext();
+
+      if (plaintext.startsWith("\\")) {
+        HANDLER_STRATEGY.handle(e);
+      }
     }
+  }
 }
