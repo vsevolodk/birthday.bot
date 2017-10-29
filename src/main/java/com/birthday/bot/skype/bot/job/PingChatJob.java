@@ -58,6 +58,12 @@ public class PingChatJob implements Job {
     }
 
     private String getMessage(int days) {
+        if (days == -1) {
+            return "<b>Birthday was yesterday</b>";
+        }
+        if (days < 0) {
+            return String.format("<b>Birthday was %s ago</b>", -1 * days);
+        }
         if (days != 1) {
             return String.format("<b>%s days left</b>", days);
         } else {
