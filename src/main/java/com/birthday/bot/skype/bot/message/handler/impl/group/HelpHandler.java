@@ -1,13 +1,16 @@
 package com.birthday.bot.skype.bot.message.handler.impl.group;
 
+import com.birthday.bot.skype.bot.message.handler.CommandHandler;
 import com.birthday.bot.skype.bot.message.handler.impl.admin.AbstractAdminHandler;
+import com.birthday.bot.skype.chat.ChatForBDay;
 import com.samczsun.skype4j.events.chat.message.MessageReceivedEvent;
+import com.samczsun.skype4j.exceptions.ConnectionException;
 import com.samczsun.skype4j.formatting.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-public class HelpHandler extends AbstractAdminHandler {
+public class HelpHandler extends CommandHandler {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(HelpHandler.class);
 
@@ -21,7 +24,12 @@ public class HelpHandler extends AbstractAdminHandler {
   );
 
   @Override
-  protected Message getMessage(MessageReceivedEvent messageReceivedEvent) {
-    return helpMessage;
+  public void handle(MessageReceivedEvent messageReceivedEvent) {
+    final ChatForBDay chatForBDay = getChatForBDay(messageReceivedEvent);
+    try {
+      chatForBDay.sendMessage(helpMessage);
+    } catch (ConnectionException e) {
+      LOGGER.error("Error during group help command", e);
+    }
   }
 }
